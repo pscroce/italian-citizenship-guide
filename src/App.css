@@ -1,32 +1,80 @@
+:root {
+  --primary: #3d3d3d;
+  --primary-rgba: rgba(61,61,61, 0.55);
+  --lightGray: #7d7d7d;
+  --backgroundColor: #f7f7f7;
+}
+* {
+  box-sizing: border-box;
+}
+#root {
+  min-width: 100%;
+  overflow: hidden;
+}
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
+  min-height: 100vh;
   flex-direction: column;
+  margin: 0 10px;
+}
+@media (min-width: 768px) {
+  .App {
+    margin: 0 20px;
+  }
+}
+h1, h2, h3 {
+
+}
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+.App-header {
+  height: 70px;
+  border-bottom: 3px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-home a {
+  border-bottom: none;
+}
+body {
+  color: var(--primary);
+  background-color: var(--background-color);
+  flex: 1;
+  font-family: 'Rubik', sans-serif;
+  line-height: 1.5;
+}
+a,
+a:visited {
+  color: var(--lightGray);
+  text-decoration: none;
+  fill: inherit;
+  background-image: linear-gradient(180deg,transparent 98%, var(--primary) 0);
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  transition: all 0.2s ease-in-out;
+}
+a:hover,
+a:active {
+  color: inherit;
+
+  background-image: linear-gradient(180deg,transparent 98%, var(--primary) 0);
+  background-size: 100% 100%;
+}
+.text-section {
+
+}
+@media (min-width: 768px) {
+  .text-section {
+    width: 49%;
+  }
+}
+footer {
+  height: 70px;
+  border-top: 3px solid #3d3d3d;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin-top: 20px;
 }
