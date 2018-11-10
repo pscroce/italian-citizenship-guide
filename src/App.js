@@ -3,142 +3,138 @@ import Guide from './components/Guide';
 import Header from './components/Header';
 import Select from 'react-select';
 import './App.css';
-const ancestorOptions = [
-  { value: 'parent', label: 'Parent' },
-  { value: 'gParent', label: 'Grandparent' },
-  { value: 'ggParent', label: 'Great-grandparent' },
 
-];
-const options = [
+// If one's Italian ancestor is their parent, they don't need anything else.
+// If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
+// If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
+const ancestorOptions = [
   { value: 'mother', label: 'Mother' },
   { value: 'father', label: 'Father' },
-  { value: 'gmother', label: 'Grandmother' },
-  { value: 'gfather', label: 'Grandfather' },
-  { value: 'ggmother', label: 'Great-grandmother' },
-  { value: 'ggfather', label: 'Great-grandfather' }
+  { value: 'grandmother', label: 'Grandmother' },
+  { value: 'grandfather', label: 'Grandfather' },
+  { value: 'great-grandmother', label: 'Great-grandmother' },
+  { value: 'great-grandfather', label: 'Great-grandfather' }
+];
+const grandparentOptions = [
+  { value: 'grandmother', label: 'Grandmother' },
+  { value: 'grandfather', label: 'Grandfather' },
+];
+const parentOptions = [
+  { value: 'mother', label: 'Mother' },
+  { value: 'father', label: 'Father' },
 ];
 
 class App extends Component {
-    state = {
-      ancestor: '',
-      parent: '',
-      gParent: '',
-      ggParent: ''
-    }
-  handleAncestorChange = (ancestor) => {
+  state = {
+    ancestor: '',
+    grandparent: '',
+    parent: ''
+  }
+  // These could be abstracted and consolidated but that's confusing to me. Haaalp.
+  handleChange = (ancestor) => {
     this.setState({ ancestor });
   }
-  handleChange = (parent) => {
+  handleGrandparentChange = (grandparent) => {
+    this.setState({ grandparent });
+  }
+  handleParentChange = (parent) => {
     this.setState({ parent });
-  }
-  handleGParentChange = (gParent) => {
-    this.setState({ gParent });
-  }
-  handleGGParentChange = (ggParent) => {
-    this.setState({ ggParent });
   }
   render() {
     const { ancestor } = this.state;
+    const { grandparent } = this.state;
     const { parent } = this.state;
-    const { gParent } = this.state;
-    const { ggParent } = this.state;
+
+    // Took this syntax from here: https://react-select.com/styles
+    const selectTheme = (theme) => ({
+      ...theme,
+      borderRadius: 0,
+      colors: {
+      ...theme.colors,
+        primary25: '#e5e5e5',
+        primary: '#3d3d3d',
+      },
+    });
+    const selectStyles = {
+      control: (provided, state) =>  ({
+        ...provided,
+        marginTop: 10,
+      }),
+    }
 
     return (
       <div className="App">
         <Header></Header>
         <body>
-          <Guide></Guide>
+        <div className="form-wrapper">
+          <form // onSubmit={this.handleSubmit} style={styles.form}
+          >
+              <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
+              <p className="description">This is your closest ancestor who has or had Italian citizenship.</p>
+              <Select
+                value={ancestor}
+                onChange={this.handleChange}
+                options={ancestorOptions}
+                theme={selectTheme}
+                styles={selectStyles}
+              />
 
-          <div className="form-wrapper"
-            // style={styles.formWrapper}
-            >
-            <form
-              // onSubmit={this.handleSubmit} style={styles.form}
-              >
-
+              {
+                (this.state.ancestor.value === 'mother' || this.state.ancestor.value === 'father') &&
                 <div>
-                  if gg, show "select your gg's daughter or son (your g-mother or g-father)"
-                  if g, show "select your g's daughter or son (your mother or father)"
+                  <h3>Nice! It'll be easy for you to get your citizenship. </h3>
+
                 </div>
-                <h3>Select your Italian ancestor</h3>
-                <Select
-                  value={ancestor}
-                  onChange={this.handleAncestorChange}
-                  options={ancestorOptions}
-                />
-
-                {
-                  this.state.ancestor.value === 'parent' &&
-                  <div>
-                    <h3>Select your lineage</h3>
+              }
+              {
+                (this.state.ancestor.value === 'grandmother' || this.state.ancestor.value === 'grandfather') &&
+                <div>
+                <h3 className="no-margin-bottom">Now select your connecting parent</h3>
+                  <p className="description">This is the daughter or son of your Italian grandparent</p>
+                  <Select
+                    value={parent}
+                    onChange={this.handleParentChange}
+                    options={parentOptions}
+                    theme={selectTheme}
+                    styles={selectStyles}
+                  />
+                </div>
+              }
+              {
+                (this.state.ancestor.value === 'great-grandmother' || this.state.ancestor.value === 'great-grandfather') &&
+                <div>
+                  <h3 className="no-margin-bottom">Now select your connecting grandparent</h3>
+                  <p className="description">This is the daughter or son of your Italian great-grandparent</p>
+                    <Select
+                      value={grandparent}
+                      onChange={this.handleGrandparentChange}
+                      options={grandparentOptions}
+                      theme={selectTheme}
+                      styles={selectStyles}
+                    />
+                  <h3 className="no-margin-bottom">And also your connecting parent</h3>
+                  <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent</p>
                     <Select
                       value={parent}
-                      onChange={this.handleChange}
-                      options={options}
+                      onChange={this.handleParentChange}
+                      options={parentOptions}
+                      theme={selectTheme}
+                      styles={selectStyles}
                     />
-                  </div>
-                }
-                {
-                  this.state.ancestor.value === 'gParent' &&
-                  <div>
-                    <h3>Select your lineage</h3>
-                    <Select
-                      value={parent}
-                      onChange={this.handleChange}
-                      options={options}
-                    />
-                    <Select
-                      value={gParent}
-                      onChange={this.handleGParentChange}
-                      options={options}
-                    />
-                  </div>
-                }
-                {
-                  this.state.ancestor.value === 'ggParent' &&
-                  <div>
-                    <h3>Select your lineage</h3>
-                    <Select
-                      value={parent}
-                      onChange={this.handleChange}
-                      options={options}
-                    />
-                    <Select
-                      value={gParent}
-                      onChange={this.handleGParentChange}
-                      options={options}
-                    />
-                    <Select
-                      value={ggParent}
-                      onChange={this.handleGGParentChange}
-                      options={options}
-                    />
-                  </div>
-                }
+                </div>
+              }
 
-              <div className="inputGroup">
-                <textarea type="text" rows="4" className="input-and-button input"
-                  // style={[styles.input, styles.inputAndButton]}
-                  // value={this.state.note}
-                  // onChange={(event) => this.setState({ note: event.target.value })}
-                  required >
-                </textarea>
-                <label htmlFor="Note"
-                  // style={styles.label}
-                  >
-                  Note
-                </label>
-              </div>
 
-              <button type="submit"
-                id="buttonSubmitForm" className="input-and-button button"
-                // style={this.state.submitted === false ? [styles.button, styles.inputAndButton] : [styles.button, styles.inputAndButton]}
-                >
-                Check Eligibility
-              </button>
-            </form>
-          </div>
+            <button type="submit"
+              id="buttonSubmitForm" className="input-and-button button"
+              // style={this.state.submitted === false ? [styles.button, styles.inputAndButton] : [styles.button, styles.inputAndButton]}
+              >
+              Check Eligibility
+            </button>
+          </form>
+        </div>
 
+          <Guide></Guide>
 
         </body>
         <footer>Italian Citizenship Guide</footer>
