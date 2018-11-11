@@ -99,9 +99,10 @@ footer {
 input, textarea, select {
   color: var(--textColor);
   background-color: transparent;
-  transition: all 0.3s ease-in-out;
-  background-image: linear-gradient(180deg,transparent 90%, var(--primary) 0);
-  background-size: 0 100%;
+  transition: background-size 0.3s ease-in-out;
+  background-image: linear-gradient(to right, rgba(0,146,70, 99%) 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, rgba(206,43,55, 99%) 66.66666666666%);
+  background-position: center bottom;
+  background-size: 0 5%;
   background-repeat: no-repeat;
 }
 textarea, select, input, button {
@@ -126,26 +127,26 @@ input:required, textarea:required {
 }
 input:focus, input:active,
 textarea:focus, textarea:active {
-  background-image: linear-gradient(180deg,transparent 90%, var(--primary) 0);
-  background-size: 100% 100%;
+  background-size: 100% 5%;
 }
 
 button {
-  transition: background-size 0.3s ease;
+  transition: all 0.3s ease;
   /* background-image: linear-gradient(180deg,transparent 0%, var(--primary) 0); */
   /* background-image: linear-gradient(to left, transparent 0%, transparent 0); */
 
-  background-size: 0 10%;
+  background-size: 0 5%;
   background-repeat: no-repeat;
   background-image: linear-gradient(to right, rgba(0,146,70, 99%) 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, rgba(206,43,55, 99%) 66.66666666666%);
+  background-position: center bottom;
 
-  background-color: var(--textColor);
+  background-color: #4d4d4d;
   color: var(--backgroundColor);
   /* border: 3px solid var(--textColor); */
   text-align: center;
   width: 750px;
   margin: 2rem 0;
-  height: 50px;
+  height: 60px;
 }
 button:-webkit-autofill,
 button:-webkit-autofill:hover,
@@ -157,10 +158,12 @@ button:-webkit-autofill:focus {
 button:focus, button:active,
 button:hover {
   /* background-image: linear-gradient(180deg,transparent 0%, var(--primary) 0); */
-  background-size: 100% 10%;
+  background-size: 100% 5%;
   /* transition: background-size 0.3s ease-in-out; */
   /* color: var(--textColor); */
   /* border: 3px solid var(--backgroundColor); */
+  background-color: var(--textColor);
+  cursor: pointer;
 }
 @media (max-width: 768px) {
   button {
