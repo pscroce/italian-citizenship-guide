@@ -12,6 +12,9 @@
 * {
   box-sizing: border-box;
 }
+#body {
+  background-color: var(--backgroundColor);
+}
 #root {
   min-width: 100%;
   overflow: hidden;
@@ -45,10 +48,12 @@ h1, h2, h3 {
 }
 body {
   color: var(--textColor);
-  background-color: var(--background-color);
   flex: 1;
   font-family: var(--bodyFontStack);
   line-height: 1.5;
+}
+.full-height {
+  flex: 1;
 }
 p.description {
   margin: 0;
@@ -85,16 +90,6 @@ footer {
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-}
-
-.guide__wrapper {
-
-}
-@media (min-width: 768px) {
-  .guide__wrapper {
-    max-width: 750px;
-    margin: 0 auto;
-  }
 }
 
 /* Forms */
@@ -134,12 +129,23 @@ textarea:focus, textarea:active {
   background-image: linear-gradient(180deg,transparent 90%, var(--primary) 0);
   background-size: 100% 100%;
 }
+
 button {
-  background-color: transparent;
-  transition: all 0.3s ease-in-out;
+  transition: background-size 0.3s ease;
   /* background-image: linear-gradient(180deg,transparent 0%, var(--primary) 0); */
-  background-size: 0 100%;
+  /* background-image: linear-gradient(to left, transparent 0%, transparent 0); */
+
+  background-size: 0 10%;
   background-repeat: no-repeat;
+  background-image: linear-gradient(to right, rgba(0,146,70, 99%) 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, rgba(206,43,55, 99%) 66.66666666666%);
+
+  background-color: var(--textColor);
+  color: var(--backgroundColor);
+  /* border: 3px solid var(--textColor); */
+  text-align: center;
+  width: 750px;
+  margin: 2rem 0;
+  height: 50px;
 }
 button:-webkit-autofill,
 button:-webkit-autofill:hover,
@@ -147,17 +153,20 @@ button:-webkit-autofill:focus {
   border: none;
   -webkit-text-fill-color: var(--textColor);
   -webkit-box-shadow: 0 0 0px 1000px var(--backgroundColor) inset;
-  transition: background-color 0.3s ease-in-out;
 }
 button:focus, button:active,
 button:hover {
   /* background-image: linear-gradient(180deg,transparent 0%, var(--primary) 0); */
-  background-image: linear-gradient(to right, rgba(0,146,70, 99%) 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, rgba(206,43,55, 99%) 66.66666666666%);
-  background-size: 100% 100%;
-  transition: all 0.3s ease-in-out;
-  /* border: 3px solid #e5e5e5; */
-  color: var(--textColor);
-  border: 3px solid var(--backgroundColor);
+  background-size: 100% 10%;
+  /* transition: background-size 0.3s ease-in-out; */
+  /* color: var(--textColor); */
+  /* border: 3px solid var(--backgroundColor); */
+}
+@media (max-width: 768px) {
+  button {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 /* material design label styling */
 .inputGroup {
@@ -197,17 +206,19 @@ a:hover, a:active {
   background-size: 100% 100%;
 }
 
-/* end forms */
 
-.form-wrapper {
+.section-narrow__wrapper {
   width: 100%;
   margin: 0 auto;
 }
 @media (min-width: 768px) {
-  .form-wrapper {
-    width: 750px;
+  .section-narrow__wrapper {
+    max-width: 750px;
   }
 }
+
+/* end forms */
+
 form {
   display: flex;
   flex-direction: column;
@@ -238,24 +249,7 @@ form {
     width: 100%;
   }
 }
-button {
-  background-color: var(--textColor);
-  color: var(--backgroundColor);
-  border: 3px solid var(--textColor);
-  text-align: center;
-  width: 750px;
-  margin: 1rem 0;
-  /* transition: background-color 1s ease; */
-}
-/* button:hover {
-  color: var(--backgroundColor);
-} */
-@media (max-width: 768px) {
-  button {
-    width: 100%;
-    margin-left: 0;
-  }
-}
+
 
 select {
    background: transparent;

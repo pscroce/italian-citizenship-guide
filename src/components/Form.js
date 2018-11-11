@@ -54,17 +54,27 @@ class Form extends Component {
       colors: {
       ...theme.colors,
         primary25: '#e5e5e5',
-        primary: '#3d3d3d',
+        primary: '#c5c5c5',
       },
     });
     const selectStyles = {
       control: (provided, state) =>  ({
         ...provided,
         marginTop: 10,
+        backgroundColor: '#f7f7f7'
+      }),
+      menuList: (provided, state) =>  ({
+        ...provided,
+        backgroundColor: '#f7f7f7'
+      }),
+      option: (provided, state) => ({
+        ...provided,
+        color: state.isSelected ? '#3d3d3d' : '#3d3d3d',
       }),
     }
     return (
       <div className="form-wrapper">
+        <h1>How To Get Italian Citizenship By Ancestry</h1>
         <form onSubmit={this.handleSubmit}>
           <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
           <p className="description">This is your closest ancestor who has or had Italian citizenship.</p>

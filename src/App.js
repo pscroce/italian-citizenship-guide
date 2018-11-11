@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Guide from './components/Guide';
 import Header from './components/Header';
 import Form from './components/Form';
+import SectionNarrow from './components/SectionNarrow';
+
 import './App.css';
 
 class App extends Component {
@@ -12,13 +14,17 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        <body>
 
-          <Form></Form>
+        <div className="full-height">
+          <SectionNarrow>
+            <Form></Form>
+          </SectionNarrow>
 
-          <Guide></Guide>
+          <SectionNarrow>
+            <Guide />
+          </SectionNarrow>
+        </div>
 
-        </body>
         <footer>Italian Citizenship Guide</footer>
       </div>
     );
