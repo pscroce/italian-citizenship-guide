@@ -3,7 +3,8 @@ import React from 'react';
 function Guide() {
   return (
     <div className="guide__wrapper">
-      <h1>How to get Italian citizenship by ancestry</h1>
+      <h1>The Steps To Get Italian Dual Citizenship</h1>
+      <p>Some steps will vary depending on special circumstances but for the vast majority of applicants the following steps are an accurate outline of what you must do to get Italian dual citizenship.</p>
         <h3>Identify your lineage</h3>
         <ol>
           <li>Your parent, grandparent, or great-grandparent must have been an Italian citizen</li>

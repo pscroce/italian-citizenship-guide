@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import '../App.css';
 
-// If one's Italian ancestor is their parent, they don't need anything else.
+// If one's Italian ancestor is their parent, they don't need any additional ancestry.
 // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
 // If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
 const ancestorOptions = [
@@ -21,12 +21,18 @@ const parentOptions = [
   { value: 'mother', label: 'Mother' },
   { value: 'father', label: 'Father' },
 ];
+const booleanOptions = [
+  { value: true, label: 'Yes' },
+  { value: false, label: 'No' },
+];
 
 class Form extends Component {
   state = {
     ancestor: '',
     grandparent: '',
-    parent: ''
+    parent: '',
+    ancestorNaturalized: null,
+    ancestorWedlock: null
   }
   // These could be abstracted and consolidated but that's confusing to me. Haaalp.
   handleChange = (ancestor) => {
@@ -38,6 +44,12 @@ class Form extends Component {
   handleParentChange = (parent) => {
     this.setState({ parent });
   }
+  handleNaturalizedChange = (ancestorNaturalized) => {
+    this.setState({ ancestorNaturalized });
+  }
+  handleWedlockChange = (ancestorWedlock) => {
+    this.setState({ ancestorWedlock });
+  }
   handleSubmit = () => {
     alert("you submitted the form")
   }
@@ -46,6 +58,9 @@ class Form extends Component {
     const { ancestor } = this.state;
     const { grandparent } = this.state;
     const { parent } = this.state;
+    const { ancestorNaturalized } = this.state;
+    const { ancestorWedlock } = this.state;
+
 
     // Took this syntax from here: https://react-select.com/styles
     const selectTheme = (theme) => ({
@@ -74,10 +89,12 @@ class Form extends Component {
     }
     return (
       <div className="form-wrapper">
-        <h1>How To Get Italian Citizenship By Ancestry</h1>
+        <h1>How To Get Italian Citizenship</h1>
+        <p>Most people with Italian ancestors can get Italian dual citizenship and an Italian passport. The process is called jus sanguinis and, much like saying those words, it isn't simple.  </p>
+        <p>After I received Italian dual citizenship and an Italian passport in 2018, I decided to make an Italian citizenship guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through.</p>
         <form onSubmit={this.handleSubmit}>
           <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
-          <p className="description">This is your closest ancestor who has or had Italian citizenship.</p>
+          <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
 
             <Select
               value={ancestor}
@@ -87,11 +104,27 @@ class Form extends Component {
               styles={selectStyles}
             />
 
-            { // If one's Italian ancestor is their parent, they don't need anything else.
-              (this.state.ancestor.value === 'mother' || this.state.ancestor.value === 'father') &&
+            { // If one's Italian ancestor is their parent, they don't need any additional ancestry but they do need to prove their parent did not naturalize or renounce citizenship before they were born and that they were born when their parents were "in wedlock."
+              (this.state.ancestor.value) &&
               <div>
-                <h3>Nice! It'll be easy for you to get your citizenship. </h3>
-
+                <h3 className="no-margin-bottom">Did your {this.state.ancestor.value} naturalize or renounce {this.state.ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship for any reason before you were born?</h3>
+                <p className="description">There are many reasons people choose to naturalize or renounce citizenship, ranging from standard immigration procedure to applying for top secret clearance in a government or military position.</p>
+                <Select
+                  value={ancestorNaturalized}
+                  onChange={this.handleNaturalizedChange}
+                  options={booleanOptions}
+                  theme={selectTheme}
+                  styles={selectStyles}
+                />
+              <h3 className="no-margin-bottom">Were you born while your {this.state.ancestor.value} was married to your {this.state.ancestor.value !== 'mother' && this.state.ancestor.value !== 'father' ? (this.state.ancestor.value.indexOf('grand') > -1 ? 'grand' : 'great-grand') : ''}{this.state.ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
+                <p className="description">Italian law states that Italian citizenship may only be passed to offspring when birthed "in wedlock."</p>
+                <Select
+                  value={ancestorWedlock}
+                  onChange={this.handleWedlockChange}
+                  options={booleanOptions}
+                  theme={selectTheme}
+                  styles={selectStyles}
+                />
               </div>
             }
 
@@ -99,7 +132,7 @@ class Form extends Component {
               (this.state.ancestor.value === 'grandmother' || this.state.ancestor.value === 'grandfather') &&
               <div>
               <h3 className="no-margin-bottom">Now select your connecting parent</h3>
-                <p className="description">This is the daughter or son of your Italian grandparent</p>
+                <p className="description">This is the daughter or son of your Italian grandparent.</p>
                 <Select
                   value={parent}
                   onChange={this.handleParentChange}
@@ -114,7 +147,7 @@ class Form extends Component {
               (this.state.ancestor.value === 'great-grandmother' || this.state.ancestor.value === 'great-grandfather') &&
               <div>
                 <h3 className="no-margin-bottom">Now select your connecting grandparent</h3>
-                <p className="description">This is the daughter or son of your Italian great-grandparent</p>
+                <p className="description">This is the daughter or son of your Italian great-grandparent.</p>
                   <Select
                     value={grandparent}
                     onChange={this.handleGrandparentChange}
@@ -123,7 +156,7 @@ class Form extends Component {
                     styles={selectStyles}
                   />
                 <h3 className="no-margin-bottom">And also your connecting parent</h3>
-                <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent</p>
+                <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent.</p>
                   <Select
                     value={parent}
                     onChange={this.handleParentChange}
