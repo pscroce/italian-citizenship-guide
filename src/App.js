@@ -20,9 +20,6 @@ class App extends Component {
             <Form></Form>
           </SectionNarrow>
 
-          <SectionNarrow>
-            <Guide />
-          </SectionNarrow>
         </div>
 
         <footer>Italian Citizenship Guide</footer>

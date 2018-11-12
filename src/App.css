@@ -221,6 +221,14 @@ a:hover, a:active {
 }
 
 /* end forms */
+.form-wrapper {
+  margin-top: 1rem;
+}
+@media (min-width: 768px) {
+  .section-narrow__wrapper {
+    margin-top: 3rem;
+  }
+}
 
 form {
   display: flex;

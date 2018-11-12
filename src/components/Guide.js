@@ -3,8 +3,8 @@ import React from 'react';
 function Guide() {
   return (
     <div className="guide__wrapper">
-      <h1>The Steps To Get Italian Dual Citizenship</h1>
-      <p>Some steps will vary depending on special circumstances but for the vast majority of applicants the following steps are an accurate outline of what you must do to get Italian dual citizenship.</p>
+      <h1 className="no-margin-bottom">The Steps To Get Italian Dual Citizenship</h1>
+      <p className="description">Some steps will vary depending on special circumstances but for the vast majority of applicants the following steps are an accurate outline of what you must do to get Italian dual citizenship.</p>
         <h3>Identify your lineage</h3>
         <ol>
           <li>Your parent, grandparent, or great-grandparent must have been an Italian citizen</li>

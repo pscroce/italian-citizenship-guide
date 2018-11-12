@@ -22,8 +22,9 @@ const parentOptions = [
   { value: 'father', label: 'Father' },
 ];
 const booleanOptions = [
-  { value: true, label: 'Yes' },
-  { value: false, label: 'No' },
+  { value: 'no', label: 'No' },
+  { value: 'yes', label: 'Yes' },
+  { value: 'unsure', label: 'I don\'t know' },
 ];
 
 class Form extends Component {
@@ -31,8 +32,8 @@ class Form extends Component {
     ancestor: '',
     grandparent: '',
     parent: '',
-    ancestorNaturalized: null,
-    ancestorWedlock: null
+    ancestorNaturalized: '',
+    ancestorWedlock: ''
   }
   // These could be abstracted and consolidated but that's confusing to me. Haaalp.
   handleChange = (ancestor) => {
@@ -90,8 +91,9 @@ class Form extends Component {
     return (
       <div className="form-wrapper">
         <h1>How To Get Italian Citizenship</h1>
-        <p>Most people with Italian ancestors can get Italian dual citizenship and an Italian passport. The process is called jus sanguinis and, much like saying those words, it isn't simple.  </p>
-        <p>After I received Italian dual citizenship and an Italian passport in 2018, I decided to make an Italian citizenship guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through.</p>
+        <p>Most people with Italian ancestors can get Italian dual citizenship and an Italian passport, along with all the benefits of European citizenship such as the rights to live, work, establish business, and study in any of the 31 countries in the European Economic Area. The process is achievable but marred by misinformation and bureaucratic bloat.  </p>
+        <p>After I received Italian dual citizenship and an Italian passport in 2018 (a process I began in 2014 and which required thousands of hours of research, paperwork, phonecalls, etc.), I decided to make an Italian citizenship guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through.</p>
+        <p>Answer the questions below to check your eligibility.</p>
         <form onSubmit={this.handleSubmit}>
           <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
           <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
@@ -116,7 +118,7 @@ class Form extends Component {
                   theme={selectTheme}
                   styles={selectStyles}
                 />
-              <h3 className="no-margin-bottom">Were you born while your {this.state.ancestor.value} was married to your {this.state.ancestor.value !== 'mother' && this.state.ancestor.value !== 'father' ? (this.state.ancestor.value.indexOf('grand') > -1 ? 'grand' : 'great-grand') : ''}{this.state.ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
+                <h3 className="no-margin-bottom">Were you born while your {this.state.ancestor.value} was married to your {this.state.ancestor.value !== 'mother' && this.state.ancestor.value !== 'father' ? (this.state.ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{this.state.ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
                 <p className="description">Italian law states that Italian citizenship may only be passed to offspring when birthed "in wedlock."</p>
                 <Select
                   value={ancestorWedlock}
@@ -167,9 +169,13 @@ class Form extends Component {
               </div>
             }
 
-          <button type="submit" id="buttonSubmitForm" className="input-and-button button">
-            Check Eligibility
-          </button>
+            {
+              (this.state.ancestor.value) &&
+              <button type="submit" id="buttonSubmitForm" className="input-and-button button">
+                Check Eligibility
+              </button>
+            }
+
         </form>
       </div>
     )
