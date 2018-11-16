@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import '../App.css';
+import { Link } from 'react-router-dom';
+
+// import '../../../src/App.css';
 
 // If one's Italian ancestor is their parent, they don't need any additional ancestry.
 // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
@@ -203,6 +205,8 @@ class Form extends Component {
                   <div>
                    <h2 className="no-margin-bottom">Congratulations! You can apply for Italian citizenship.</h2>
                    <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
+                   <Link to="guide" className="button -large">Complete Guide</Link>
+
                   </div>
                 }
                 {
@@ -210,6 +214,8 @@ class Form extends Component {
                   <div>
                    <h2 className="no-margin-bottom">Sorry! You are not eligible for Italian citizenship.</h2>
                    <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
+                   <Link to="guide" className="button -large">Complete Guide</Link>
+
                   </div>
                 }
               </div>

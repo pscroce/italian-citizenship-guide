@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import '../App.css';
 
 // If one's Italian ancestor is their parent, they don't need any additional ancestry.
 // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.

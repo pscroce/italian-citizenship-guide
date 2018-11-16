@@ -47,6 +47,14 @@ h1, h2, h3 {
 .header-home a {
   border-bottom: none;
 }
+.nav-right a {
+  margin-left: 10px;
+}
+@media (min-width: 768px) {
+  .nav-right a {
+    margin-left: 20px;
+  }
+}
 body {
   color: var(--textColor);
   flex: 1;
@@ -56,6 +64,11 @@ body {
 .full-height {
   flex: 1;
 }
+.full-height__wrapper {
+  display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 p.description {
   margin: 0;
   color: var(--lightGray);
@@ -64,8 +77,8 @@ p.description {
 a, a:visited {
   color: var(--lightGray);
   fill: inherit;
-  background-image: linear-gradient(180deg,transparent 90%, var(--primary-rgba) 0);
-  background-size: 0 100%;
+  background-image: linear-gradient(180deg,transparent 65%, var(--primary) 0);
+  background-size: 0 20%;
   background-repeat: no-repeat;
   background-position: center bottom;
   transition: all 0.2s ease-in-out;
@@ -73,11 +86,10 @@ a, a:visited {
 }
 a:hover, a:active {
   color: inherit;
-  background-image: linear-gradient(180deg,transparent 90%, var(--primary-rgba) 0);
-  background-size: 100% 100%;
+  background-size: 100% 20%;
 }
 button, a.button {
-  background-size: 0 10%;
+  background-size: 0 20%;
   background-repeat: no-repeat;
   background-image: linear-gradient(to right, rgba(0,146,70, 99%) 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, rgba(206,43,55, 99%) 66.66666666666%);
   background-position: center bottom;
@@ -94,7 +106,7 @@ a.button:hover {
   cursor: pointer;
 }
 button.-small, a.button.-small {
-  padding: 5px 10px;
+  padding: 10px 15px;
   transition: all 0.2s ease;
 
 }
@@ -104,9 +116,12 @@ button.-large, a.button.-large {
   height: 60px;
   font-size: 1.5rem;
   transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 @media (max-width: 768px) {
-  button, a.button {
+  button.-large, a.button.-large {
     width: 100%;
     margin-left: 0;
   }
@@ -172,7 +187,7 @@ input, textarea, select {
   background-size: 0 5%;
   background-repeat: no-repeat;
 }
-textarea, select, input, button {
+textarea, select, input, button, a.button {
   outline: none;
 }
 input:-webkit-autofill,

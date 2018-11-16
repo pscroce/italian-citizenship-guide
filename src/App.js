@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import Guide from './components/Guide';
-import Header from './components/Header';
-import Form from './components/Form';
-import SectionNarrow from './components/SectionNarrow';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch } from 'react-router-dom';
 
-import './App.css';
+import Guide from './components/pages/Guide';
+import Home from './components/pages/Home';
+
 
 class App extends Component {
 
@@ -13,16 +15,15 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header></Header>
-
-        <div className="full-height">
-          <SectionNarrow>
-            <Form></Form>
-          </SectionNarrow>
-
+      <Router>
+        <div>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/guide' component={Guide} />
+            <Route component={Home} />
+          </Switch>
         </div>
-
-        <footer>Italian Citizenship Guide</footer>
+      </Router>
       </div>
     );
   }
