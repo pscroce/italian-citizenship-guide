@@ -33,7 +33,8 @@ class Form extends Component {
     grandparent: '',
     parent: '',
     ancestorNaturalized: '',
-    ancestorWedlock: ''
+    ancestorWedlock: '',
+    ancestor1948: ''
   }
   // These could be abstracted and consolidated but that's confusing to me. Haaalp.
   handleChange = (ancestor) => {
@@ -51,6 +52,9 @@ class Form extends Component {
   handleWedlockChange = (ancestorWedlock) => {
     this.setState({ ancestorWedlock });
   }
+  handle1948Change = (ancestor1948) => {
+    this.setState({ ancestor1948 });
+  }
   handleSubmit = () => {
     alert("you submitted the form")
   }
@@ -61,6 +65,7 @@ class Form extends Component {
     const { parent } = this.state;
     const { ancestorNaturalized } = this.state;
     const { ancestorWedlock } = this.state;
+    const { ancestor1948 } = this.state;
 
 
     // Took this syntax from here: https://react-select.com/styles
@@ -167,7 +172,7 @@ class Form extends Component {
                   theme={selectTheme}
                   styles={selectStyles}
                 />
-                {
+                { // If your ancestor was a woman and was born before 1948, she cannot pass on Italian citizenship
                   (this.state.ancestor.value.indexOf('mother') > -1) &&
                   <div>
                     {
@@ -184,17 +189,29 @@ class Form extends Component {
                     }
                     <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
                     <Select
-                      value={ancestorNaturalized}
-                      onChange={this.handleNaturalizedChange}
+                      value={ancestor1948}
+                      onChange={this.handle1948Change}
                       options={booleanOptions}
                       theme={selectTheme}
                       styles={selectStyles}
                     />
                   </div>
                 }
-                <button type="submit" id="buttonSubmitForm" className="-large">
-                  Check Eligibility
-                </button>
+
+                {
+                  (this.state.ancestor.value && this.state.ancestorWedlock.value === 'yes' && this.state.ancestorNaturalized.value === 'no' && (this.state.ancestor1948.value === '' || this.state.ancestor1948.value === 'yes')) &&
+                  <div>
+                   <h2 className="no-margin-bottom">Congratulations! You can apply for Italian citizenship.</h2>
+                   <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
+                  </div>
+                }
+                {
+                  !(this.state.ancestor.value && this.state.ancestorWedlock.value === 'yes' && this.state.ancestorNaturalized.value === 'no' && (this.state.ancestor1948.value === '' || this.state.ancestor1948.value === 'yes')) &&
+                  <div>
+                   <h2 className="no-margin-bottom">Sorry! You are not eligible for Italian citizenship.</h2>
+                   <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
+                  </div>
+                }
               </div>
             }
 
