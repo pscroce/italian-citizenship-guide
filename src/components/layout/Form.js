@@ -25,8 +25,8 @@ const parentOptions = [
 ];
 const booleanOptions = [
   { value: 'no', label: 'No' },
-  { value: 'yes', label: 'Yes' },
-  { value: 'unsure', label: 'I don\'t know' },
+  { value: 'yes', label: 'Yes' }
+  // { value: 'unsure', label: 'I don\'t know' },
 ];
 
 class Form extends Component {
@@ -210,7 +210,7 @@ class Form extends Component {
                   </div>
                 }
                 {
-                  !(this.state.ancestor.value && this.state.ancestorWedlock.value === 'yes' && this.state.ancestorNaturalized.value === 'no' && (this.state.ancestor1948.value === '' || this.state.ancestor1948.value === 'yes')) &&
+                  (this.state.ancestor.value && this.state.ancestorWedlock.value && this.state.ancestorNaturalized.value && (this.state.ancestor1948.value || this.state.ancestor.value.indexOf('father') > -1)) && (!this.state.ancestor.value && this.state.ancestorWedlock.value === 'yes' && this.state.ancestorNaturalized.value === 'no' && (this.state.ancestor1948.value === '' || this.state.ancestor1948.value === 'yes')) &&
                   <div>
                    <h2 className="no-margin-bottom">Sorry! You are not eligible for Italian citizenship.</h2>
                    <p className="description">Click the button below to read the full process required to apply for citizenship.</p>

@@ -150,7 +150,12 @@ footer {
 
 /* end forms */
 .form-wrapper {
-  margin-top: 1rem;
+  margin: 1rem 0 7rem;
+}
+@media (min-width: 768px) {
+  .form-wrapper {
+    margin: 1rem 0 7rem;
+  }
 }
 @media (min-width: 768px) {
   .section-narrow__wrapper {
@@ -162,7 +167,7 @@ form {
   display: flex;
   flex-direction: column;
 }
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   form {
     margin: 0;
   }
