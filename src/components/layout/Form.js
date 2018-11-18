@@ -40,6 +40,7 @@ class Form extends Component {
     grandmother1948: '',
     mother1948: '',
     isEligible: null,
+    femaleAfter1948: null,
     guideIsOpen: false
   }
   // These could be abstracted to handleChange and consolidated but that's confusing to me. Haaalp.
@@ -99,40 +100,40 @@ class Form extends Component {
     let greatGrandmother = this.state.greatGrandparent.value === 'great-grandmother';
     let greatGrandfather = this.state.ancestor.value === 'great-grandfather';
 
-    let oneGenFemaleEligible =   (motherAncestor && mother1948)
-    let twoGenFemaleEligible =   (grandmotherAncestor      && grandmother1948 && father )                    || (grandmother      && grandmother1948 && mother && mother1948)
-    let threeGenFemaleEligible = (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && father) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandfather && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && father)
+    let oneGenFemaleAfter1948 =   (motherAncestor && mother1948)
+    let twoGenFemaleAfter1948 =   (grandmotherAncestor      && grandmother1948 && father )                    || (grandmother      && grandmother1948 && mother && mother1948)
+    let threeGenFemaleAfter1948 = (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && father) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandfather && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && father)
 
-    let baselineEligibilityMale = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
-    let baselineEligibilityFemale = baselineEligibilityMale && (oneGenFemaleEligible || twoGenFemaleEligible || threeGenFemaleEligible);
+    let baselineEligibility = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
+    let femaleAfter1948 = (oneGenFemaleAfter1948 || twoGenFemaleAfter1948 || threeGenFemaleAfter1948);
 
-    if      (baselineEligibilityFemale && mother){
+    if      (baselineEligibility && mother){
       eligible = true;}
-    else if (baselineEligibilityFemale && grandmother && mother){
+    else if (baselineEligibility && grandmother && mother){
       eligible = true;}
-    else if (baselineEligibilityFemale && greatGrandmother && grandmother && mother){
+    else if (baselineEligibility && greatGrandmother && grandmother && mother){
       eligible = true;} // end all female
-    else if (baselineEligibilityMale   && father){
+    else if (baselineEligibility && father){
       eligible = true;}
-    else if (baselineEligibilityMale   && grandfather && father){
+    else if (baselineEligibility && grandfather && father){
       eligible = true;}
-    else if (baselineEligibilityMale   && greatGrandfather && grandfather && father){
+    else if (baselineEligibility && greatGrandfather && grandfather && father){
       eligible = true;} // end all male
-    else if (baselineEligibilityFemale && greatGrandmother && grandmother && father){
+    else if (baselineEligibility && greatGrandmother && grandmother && father){
       eligible = true;}
-    else if (baselineEligibilityFemale && greatGrandmother && grandfather && father){
+    else if (baselineEligibility && greatGrandmother && grandfather && father){
       eligible = true;}
-    else if (baselineEligibilityFemale && greatGrandmother && grandfather && mother){
+    else if (baselineEligibility && greatGrandmother && grandfather && mother){
       eligible = true;}
-    else if (baselineEligibilityFemale && greatGrandfather && grandmother && mother){
+    else if (baselineEligibility && greatGrandfather && grandmother && mother){
       eligible = true;}
-    else if (baselineEligibilityFemale && greatGrandfather && grandfather && mother){
+    else if (baselineEligibility && greatGrandfather && grandfather && mother){
       eligible = true;}
-    else if (baselineEligibilityFemale && greatGrandfather && grandmother && father){
+    else if (baselineEligibility && greatGrandfather && grandmother && father){
       eligible = true;}
     else {
       eligible = false;}
-    this.setState({ isEligible: eligible });
+    this.setState({ isEligible: eligible, femaleAfter1948: femaleAfter1948 });
   }
 
   render() {
@@ -269,7 +270,7 @@ class Form extends Component {
                     {
                       (parent.value === 'mother') &&
                       <div>
-                        <h3 className="no-margin-bottom">Was your {parent.value} born after January 1, 1948?</h3>
+                        <h3 className="no-margin-bottom">Were you born after January 1, 1948?</h3>
                         <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
                         <Select isSearchable={false}
                           value={mother1948}
@@ -282,9 +283,9 @@ class Form extends Component {
                     }
 
                     {
-                      (grandparent.value === 'grandmother') &&
+                      (grandparent.value === 'grandmother' && parent.value) &&
                       <div>
-                        <h3 className="no-margin-bottom">Was your {grandparent.value} born after January 1, 1948?</h3>
+                        <h3 className="no-margin-bottom">Was your {parent.value} born after January 1, 1948?</h3>
                         <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
                         <Select isSearchable={false}
                           value={grandmother1948}
@@ -296,9 +297,9 @@ class Form extends Component {
                       </div>
                     }
                     {
-                      (greatGrandparent.value === 'great-grandmother') &&
+                      (greatGrandparent.value === 'great-grandmother' && grandparent.value) &&
                       <div>
-                        <h3 className="no-margin-bottom">Was your {greatGrandparent.value} born after January 1, 1948?</h3>
+                        <h3 className="no-margin-bottom">Was your {grandparent.value} born after January 1, 1948?</h3>
                         <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
                         <Select isSearchable={false}
                           value={greatGrandmother1948}
@@ -320,8 +321,14 @@ class Form extends Component {
                 {
                   (this.state.isEligible === true) &&
                   <div>
-                   <h2 className="no-margin-bottom">Congratulations! You can apply for Italian citizenship.</h2>
-                   <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
+                   <h2 className="no-margin-bottom">Congratulations! You're eligible for Italian citizenship.</h2>
+                   <p>Click the button below to read the full process required to apply for citizenship.</p>
+                   { (!this.state.femaleAfter1948) &&
+                     <p>Because part of your lineage includes a woman who gave birth to the next person in your lineage before 1948, your application process can be submitted through the Rome Tribunal.</p>
+                   }
+                   { (this.state.femaleAfter1948) &&
+                     <p>Because your lineage does not include a woman who gave birth to the next person in your lineage before 1948, your application process can be submitted through the any Italian consulate.</p>
+                   }
                    <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
                   </div>
                 }
