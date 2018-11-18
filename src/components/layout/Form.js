@@ -324,10 +324,10 @@ class Form extends Component {
                    <h2 className="no-margin-bottom">Congratulations! You're eligible for Italian citizenship.</h2>
                    <p>Click the button below to read the full process required to apply for citizenship.</p>
                    { (!this.state.femaleAfter1948) &&
-                     <p>Because part of your lineage includes a woman who gave birth to the next person in your lineage before 1948, your application process can be submitted through the Rome Tribunal.</p>
+                     <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your application process can be submitted through the Rome Tribunal.</p>
                    }
                    { (this.state.femaleAfter1948) &&
-                     <p>Because your lineage does not include a woman who gave birth to the next person in your lineage before 1948, your application process can be submitted through the any Italian consulate.</p>
+                     <p>Your application can be submitted through any Italian consulate.</p>
                    }
                    <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
                   </div>
