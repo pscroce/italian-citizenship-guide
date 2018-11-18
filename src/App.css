@@ -202,7 +202,10 @@ form {
 
 
 
-
+sup {
+  font-size: .5rem;
+  margin-left: 5px;
+}
 
 
 /* other forms */

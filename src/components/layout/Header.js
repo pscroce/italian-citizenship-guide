@@ -5,7 +5,7 @@ function Header() {
   return (
     <header className="App-header">
       <nav className="primary-nav">
-        <h3><Link to="/">Italian Citizenship Guide</Link></h3>
+        <h3><Link to="/">Italian Citizenship Guide</Link><sup>BETA</sup></h3>
         <div className="nav-right">
           <a href="https://github.com/pscroce/italian-citizenship-guide" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
