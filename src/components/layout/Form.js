@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import GuideSteps from './GuideSteps';
+
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
 
@@ -32,15 +34,28 @@ const booleanOptions = [
 class Form extends Component {
   state = {
     ancestor: '',
+    greatGrandparent: '',
     grandparent: '',
     parent: '',
     ancestorNaturalized: '',
     ancestorWedlock: '',
-    ancestor1948: ''
+    greatGrandmother1948: '',
+    grandmother1948: '',
+    mother1948: '',
+    isEligible: null,
+    guideIsOpen: false
   }
   // These could be abstracted and consolidated but that's confusing to me. Haaalp.
-  handleChange = (ancestor) => {
+  handleAncestorChange = (ancestor) => {
     this.setState({ ancestor });
+    if (ancestor.value === 'mother' || ancestor.value === 'father') {
+      this.setState({parent: {value: ancestor.value, label: ancestor.label}, grandparent: '', greatGrandparent: ''})
+    } else if (ancestor.value === 'grandmother' || ancestor.value === 'grandfather') {
+      this.setState({grandparent: {value: ancestor.value, label: ancestor.label}, parent:'', greatGrandparent: ''})
+    } else if (ancestor.value === 'great-grandmother' || ancestor.value === 'great-grandfather') {
+      this.setState({greatGrandparent: {value: ancestor.value, label: ancestor.label}, parent: '', grandparent: ''})
+    }
+    // this.setState({ isEligible: this.isEligible() });
   }
   handleGrandparentChange = (grandparent) => {
     this.setState({ grandparent });
@@ -54,21 +69,88 @@ class Form extends Component {
   handleWedlockChange = (ancestorWedlock) => {
     this.setState({ ancestorWedlock });
   }
-  handle1948Change = (ancestor1948) => {
-    this.setState({ ancestor1948 });
+  handleGreatGrandmother1948Change = (greatGrandmother1948) => {
+    this.setState({ greatGrandmother1948 });
   }
-  handleSubmit = () => {
-    alert("you submitted the form")
+  handleGrandmother1948Change = (grandmother1948) => {
+    this.setState({ grandmother1948 });
   }
+  handleMother1948Change = (mother1948) => {
+    this.setState({ mother1948 });
+  }
+  openGuide = (e) => {
+    e.preventDefault();
+    this.setState({ guideIsOpen: !this.state.guideIsOpen });
+  }
+  isEligible = (e) => {
+    e.preventDefault();
+
+    let eligible;
+
+    let ancestor1948 = this.state.ancestor1948.value === 'yes';
+    let mother1948 = this.state.mother1948.value === 'yes';
+    let grandmother1948 = this.state.grandmother1948.value === 'yes';
+
+    let motherAncestor           = this.state.ancestor.value === 'mother';
+    let grandmotherAncestor      = this.state.ancestor.value === 'grandmother';
+    let greatGrandmotherAncestor = this.state.ancestor.value === 'great-grandmother';
+
+    let mother           = this.state.parent.value === 'mother';
+    let father           = this.state.parent.value === 'father';
+    let grandmother      = this.state.grandparent.value === 'grandmother';
+    let grandfather      = this.state.grandparent.value === 'grandfather';
+    let greatGrandmother = this.state.greatGrandparent.value === 'great-grandmother';
+    let greatGrandfather = this.state.ancestor.value === 'great-grandfather';
+
+    let oneGenFemaleEligible =   (motherAncestor && ancestor1948)
+    let twoGenFemaleEligible =   (grandmotherAncestor      && ancestor1948 && father )               || (grandmother      && ancestor1948 && mother && mother1948)
+    let threeGenFemaleEligible = (greatGrandmotherAncestor && ancestor1948 && grandfather && father) || (greatGrandmother && ancestor1948 && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmother && ancestor1948 && grandfather && mother && mother1948) || (greatGrandmother && ancestor1948 && grandmother && grandmother1948 && father)
+
+    let baselineEligibilityMale = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
+    let baselineEligibilityFemale = baselineEligibilityMale && (oneGenFemaleEligible || twoGenFemaleEligible || threeGenFemaleEligible);
+
+    if      (baselineEligibilityFemale && mother){
+      eligible = true;}
+    else if (baselineEligibilityFemale && grandmother && mother){
+      eligible = true;}
+    else if (baselineEligibilityFemale && greatGrandmother && grandmother && mother){
+      eligible = true;} // end all female
+    else if (baselineEligibilityMale   && father){
+      eligible = true;}
+    else if (baselineEligibilityMale   && grandfather && father){
+      eligible = true;}
+    else if (baselineEligibilityMale   && greatGrandfather && grandfather && father){
+      eligible = true;} // end all male
+    else if (baselineEligibilityFemale && greatGrandmother && grandmother && father){
+      eligible = true;}
+    else if (baselineEligibilityFemale && greatGrandmother && grandfather && father){
+      eligible = true;}
+    else if (baselineEligibilityFemale && greatGrandmother && grandfather && mother){
+      eligible = true;}
+    else if (baselineEligibilityFemale && greatGrandfather && grandmother && mother){
+      eligible = true;}
+    else if (baselineEligibilityFemale && greatGrandfather && grandfather && mother){
+      eligible = true;}
+    else if (baselineEligibilityFemale && greatGrandfather && grandmother && father){
+      eligible = true;}
+    else {
+      eligible = false;}
+    this.setState({ isEligible: eligible });
+  }
+
 
   render() {
     const { ancestor } = this.state;
+    const { greatGrandparent} = this.state;
     const { grandparent } = this.state;
     const { parent } = this.state;
     const { ancestorNaturalized } = this.state;
     const { ancestorWedlock } = this.state;
-    const { ancestor1948 } = this.state;
-
+    const { greatGrandmother1948 } = this.state;
+    const { grandmother1948 } = this.state;
+    const { mother1948 } = this.state;
+    const { isEligible } = this.state;
+    const { guideIsOpen } = this.state;
 
     // Took this syntax from here: https://react-select.com/styles
     const selectTheme = (theme) => ({
@@ -106,20 +188,20 @@ class Form extends Component {
           <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
           <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
 
-            <Select
+            <Select searchable={false}
               value={ancestor}
-              onChange={this.handleChange}
+              onChange={this.handleAncestorChange}
               options={ancestorOptions}
               theme={selectTheme}
               styles={selectStyles}
             />
 
             { // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
-              (this.state.ancestor.value === 'grandmother' || this.state.ancestor.value === 'grandfather') &&
+              (ancestor.value === 'grandmother' || ancestor.value === 'grandfather') &&
               <div>
               <h3 className="no-margin-bottom">Now select your Italian parent</h3>
                 <p className="description">This is the daughter or son of your Italian grandparent.</p>
-                <Select
+                <Select searchable={false}
                   value={parent}
                   onChange={this.handleParentChange}
                   options={parentOptions}
@@ -130,11 +212,11 @@ class Form extends Component {
             }
 
             { // If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
-              (this.state.ancestor.value === 'great-grandmother' || this.state.ancestor.value === 'great-grandfather') &&
+              (ancestor.value === 'great-grandmother' || ancestor.value === 'great-grandfather') &&
               <div>
                 <h3 className="no-margin-bottom">Now select your Italian grandparent</h3>
                 <p className="description">This is the daughter or son of your Italian great-grandparent.</p>
-                  <Select
+                  <Select searchable={false}
                     value={grandparent}
                     onChange={this.handleGrandparentChange}
                     options={grandparentOptions}
@@ -143,7 +225,7 @@ class Form extends Component {
                   />
                 <h3 className="no-margin-bottom">And also your Italian parent</h3>
                 <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent.</p>
-                  <Select
+                  <Select searchable={false}
                     value={parent}
                     onChange={this.handleParentChange}
                     options={parentOptions}
@@ -154,20 +236,20 @@ class Form extends Component {
             }
 
             { // They need to prove their parent did not naturalize or renounce citizenship before they were born and that they were born when their parents were "in wedlock."
-              (this.state.ancestor.value) &&
+              (ancestor.value) &&
               <div>
-                <h3 className="no-margin-bottom">Did your {this.state.ancestor.value} naturalize or renounce {this.state.ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship for any reason before you were born?</h3>
+                <h3 className="no-margin-bottom">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship for any reason before you were born?</h3>
                 <p className="description">There are many reasons people choose to naturalize or renounce citizenship, ranging from standard immigration procedure to applying for top secret clearance in a government or military position.</p>
-                <Select
+                <Select searchable={false}
                   value={ancestorNaturalized}
                   onChange={this.handleNaturalizedChange}
                   options={booleanOptions}
                   theme={selectTheme}
                   styles={selectStyles}
                 />
-                <h3 className="no-margin-bottom">Were you born while your {this.state.ancestor.value} was married to your {this.state.ancestor.value !== 'mother' && this.state.ancestor.value !== 'father' ? (this.state.ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{this.state.ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
+                <h3 className="no-margin-bottom">Were you born while your {ancestor.value} was married to your {ancestor.value !== 'mother' && ancestor.value !== 'father' ? (ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
                 <p className="description">Italian law states that Italian citizenship may only be passed to offspring when birthed "in wedlock."</p>
-                <Select
+                <Select searchable={false}
                   value={ancestorWedlock}
                   onChange={this.handleWedlockChange}
                   options={booleanOptions}
@@ -175,48 +257,78 @@ class Form extends Component {
                   styles={selectStyles}
                 />
                 { // If your ancestor was a woman and was born before 1948, she cannot pass on Italian citizenship
-                  (this.state.ancestor.value.indexOf('mother') > -1) &&
+                  (true) &&
                   <div>
                     {
-                      (this.state.ancestor.value === 'mother') &&
-                      <h3 className="no-margin-bottom">Were you born after January 1, 1948?</h3>
+                      (parent.value === 'mother') &&
+                      <div>
+                        <h3 className="no-margin-bottom">Was your {parent.value} born after January 1, 1948?</h3>
+                        <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
+                        <Select searchable={false}
+                          value={mother1948}
+                          onChange={this.handleMother1948Change}
+                          options={booleanOptions}
+                          theme={selectTheme}
+                          styles={selectStyles}
+                        />
+                      </div>
+                    }
+
+                    {
+                      (grandparent.value === 'grandmother') &&
+                      <div>
+                        <h3 className="no-margin-bottom">Was your {grandparent.value} born after January 1, 1948?</h3>
+                        <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
+                        <Select searchable={false}
+                          value={grandmother1948}
+                          onChange={this.handleGrandmother1948Change}
+                          options={booleanOptions}
+                          theme={selectTheme}
+                          styles={selectStyles}
+                        />
+                      </div>
                     }
                     {
-                      (this.state.ancestor.value === 'grandmother') &&
-                      <h3 className="no-margin-bottom">Was your {this.state.ancestor.value} born after January 1, 1948?</h3>
+                      (greatGrandparent.value === 'great-grandmother') &&
+                      <div>
+                        <h3 className="no-margin-bottom">Was your {greatGrandparent.value} born after January 1, 1948?</h3>
+                        <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
+                        <Select searchable={false}
+                          value={greatGrandmother1948}
+                          onChange={this.handleGreatGrandmother1948Change}
+                          options={booleanOptions}
+                          theme={selectTheme}
+                          styles={selectStyles}
+                        />
+                      </div>
                     }
-                    {
-                      (this.state.ancestor.value === 'great-grandmother') &&
-                      <h3 className="no-margin-bottom">Was your {this.state.ancestor.value} born after January 1, 1948?</h3>
-                    }
-                    <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
-                    <Select
-                      value={ancestor1948}
-                      onChange={this.handle1948Change}
-                      options={booleanOptions}
-                      theme={selectTheme}
-                      styles={selectStyles}
-                    />
                   </div>
                 }
 
                 {
-                  (this.state.ancestor.value && this.state.ancestorWedlock.value === 'yes' && this.state.ancestorNaturalized.value === 'no' && (this.state.ancestor1948.value === '' || this.state.ancestor1948.value === 'yes')) &&
+                  (ancestor.value) &&
+                  <button onClick={this.isEligible} className="-large">Check Eligibility</button>
+                }
+
+                {
+                  (this.state.isEligible === true) &&
                   <div>
                    <h2 className="no-margin-bottom">Congratulations! You can apply for Italian citizenship.</h2>
                    <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
-                   <Link to="guide" className="button -large">Complete Guide</Link>
-
+                   <button onClick={this.openGuide} className="-large">Check Eligibility</button>
                   </div>
                 }
                 {
-                  (this.state.ancestor.value && this.state.ancestorWedlock.value && this.state.ancestorNaturalized.value && (this.state.ancestor1948.value || this.state.ancestor.value.indexOf('father') > -1)) && (!this.state.ancestor.value && this.state.ancestorWedlock.value === 'yes' && this.state.ancestorNaturalized.value === 'no' && (this.state.ancestor1948.value === '' || this.state.ancestor1948.value === 'yes')) &&
+                  (this.state.isEligible === false) &&
                   <div>
                    <h2 className="no-margin-bottom">Sorry! You are not eligible for Italian citizenship.</h2>
                    <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
-                   <Link to="guide" className="button -large">Complete Guide</Link>
-
+                   <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
                   </div>
+                }
+                {
+                  (this.state.guideIsOpen) &&
+                  <GuideSteps></GuideSteps>
                 }
               </div>
             }
