@@ -93,7 +93,7 @@ a:hover, a:active {
   background-size: 100% 20%;
 }
 button, a.button {
-  background-size: 0 20%;
+  background-size: 0 30%;
   background-repeat: no-repeat;
   background-image: linear-gradient(to right, rgba(0,146,70, 99%) 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, rgba(206,43,55, 99%) 66.66666666666%);
   background-position: center bottom;
@@ -105,7 +105,7 @@ button:focus, button:active,
 button:hover,
 a.button:focus, a.button:active,
 a.button:hover {
-  background-size: 100% 10%;
+  background-size: 100% 5%;
   background-color: var(--textColor);
   cursor: pointer;
 }
