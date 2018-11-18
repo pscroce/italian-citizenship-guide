@@ -87,9 +87,9 @@ class Form extends Component {
 
     let eligible;
 
-    let ancestor1948 = this.state.ancestor1948.value === 'yes';
-    let mother1948 = this.state.mother1948.value === 'yes';
+    let greatGrandmother1948 = this.state.greatGrandmother1948.value === 'yes';
     let grandmother1948 = this.state.grandmother1948.value === 'yes';
+    let mother1948 = this.state.mother1948.value === 'yes';
 
     let motherAncestor           = this.state.ancestor.value === 'mother';
     let grandmotherAncestor      = this.state.ancestor.value === 'grandmother';
@@ -102,9 +102,9 @@ class Form extends Component {
     let greatGrandmother = this.state.greatGrandparent.value === 'great-grandmother';
     let greatGrandfather = this.state.ancestor.value === 'great-grandfather';
 
-    let oneGenFemaleEligible =   (motherAncestor && ancestor1948)
-    let twoGenFemaleEligible =   (grandmotherAncestor      && ancestor1948 && father )               || (grandmother      && ancestor1948 && mother && mother1948)
-    let threeGenFemaleEligible = (greatGrandmotherAncestor && ancestor1948 && grandfather && father) || (greatGrandmother && ancestor1948 && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmother && ancestor1948 && grandfather && mother && mother1948) || (greatGrandmother && ancestor1948 && grandmother && grandmother1948 && father)
+    let oneGenFemaleEligible =   (motherAncestor && mother1948)
+    let twoGenFemaleEligible =   (grandmotherAncestor      && grandmother1948 && father )                    || (grandmother      && grandmother1948 && mother && mother1948)
+    let threeGenFemaleEligible = (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && father) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandfather && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && father)
 
     let baselineEligibilityMale = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
     let baselineEligibilityFemale = baselineEligibilityMale && (oneGenFemaleEligible || twoGenFemaleEligible || threeGenFemaleEligible);
