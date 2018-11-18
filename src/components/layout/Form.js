@@ -45,7 +45,7 @@ class Form extends Component {
     isEligible: null,
     guideIsOpen: false
   }
-  // These could be abstracted and consolidated but that's confusing to me. Haaalp.
+  // These could be abstracted to handleChange and consolidated but that's confusing to me. Haaalp.
   handleAncestorChange = (ancestor) => {
     this.setState({ ancestor });
     if (ancestor.value === 'mother' || ancestor.value === 'father') {
@@ -138,7 +138,6 @@ class Form extends Component {
     this.setState({ isEligible: eligible });
   }
 
-
   render() {
     const { ancestor } = this.state;
     const { greatGrandparent} = this.state;
@@ -165,13 +164,19 @@ class Form extends Component {
     const selectStyles = {
       control: (provided, state) =>  ({
         ...provided,
+        backgroundColor: '#f7f7f7',
+        // width: 200,
+      }),
+      container: (provided, state) =>  ({
+        ...provided,
         marginTop: 10,
-        backgroundColor: '#f7f7f7'
+        // width: 200,
+        marginBottom: 'auto',
       }),
       menuList: (provided, state) =>  ({
         ...provided,
         backgroundColor: '#f7f7f7',
-        padding: 0
+        padding: 0,
       }),
       option: (provided, state) => ({
         ...provided,
@@ -185,9 +190,12 @@ class Form extends Component {
         <p>After I received Italian dual citizenship and an Italian passport in 2018 (a process I began in 2014 and which required thousands of hours of research, paperwork, phonecalls, etc.), I decided to make an Italian citizenship guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through.</p>
         <p>Answer the questions below to check your eligibility.</p>
         <form onSubmit={this.handleSubmit}>
-          <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
-          <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
 
+        <div className="question__wrapper">
+          <div className="question">
+            <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
+            <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
+          </div>
             <Select searchable={false}
               value={ancestor}
               onChange={this.handleAncestorChange}
@@ -195,12 +203,16 @@ class Form extends Component {
               theme={selectTheme}
               styles={selectStyles}
             />
+        </div>
+
 
             { // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
               (ancestor.value === 'grandmother' || ancestor.value === 'grandfather') &&
-              <div>
-              <h3 className="no-margin-bottom">Now select your Italian parent</h3>
-                <p className="description">This is the daughter or son of your Italian grandparent.</p>
+              <div className="question__wrapper">
+                <div className="question">
+                  <h3 className="no-margin-bottom">Now select your Italian parent</h3>
+                  <p className="description">This is the daughter or son of your Italian grandparent.</p>
+                </div>
                 <Select searchable={false}
                   value={parent}
                   onChange={this.handleParentChange}
