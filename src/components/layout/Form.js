@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import GuideSteps from './GuideSteps';
 
 import Select from 'react-select';
-import { Link } from 'react-router-dom';
-
-// import '../../../src/App.css';
 
 // If one's Italian ancestor is their parent, they don't need any additional ancestry.
 // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
@@ -148,8 +145,6 @@ class Form extends Component {
     const { greatGrandmother1948 } = this.state;
     const { grandmother1948 } = this.state;
     const { mother1948 } = this.state;
-    const { isEligible } = this.state;
-    const { guideIsOpen } = this.state;
 
     // Took this syntax from here: https://react-select.com/styles
     const selectTheme = (theme) => ({

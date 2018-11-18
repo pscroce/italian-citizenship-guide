@@ -4,7 +4,7 @@ import '../../../src/App.css';
 function GuideSteps() {
   return (
     <div className="guide__wrapper">
-      <h1 className="no-margin-bottom">Complete Steps To Get Italian Dual Citizenship</h1>
+      <h1 className="no-margin-bottom">Steps To Get Italian Dual Citizenship</h1>
       <p className="description">Some steps will vary depending on special circumstances but for the vast majority of applicants the following steps are an accurate outline of what you must do to get Italian dual citizenship.</p>
         <h3>Identify your lineage</h3>
         <ol>
