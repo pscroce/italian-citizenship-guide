@@ -115,7 +115,7 @@ button.-small, a.button.-small {
 
 }
 button.-large, a.button.-large {
-  width: 750px;
+  width: 550px;
   margin: 2rem 0;
   height: 60px;
   font-size: 1.5rem;
@@ -148,7 +148,7 @@ footer {
 }
 @media (min-width: 768px) {
   .section-narrow__wrapper {
-    max-width: 750px;
+    max-width: 550px;
   }
 }
 
@@ -158,7 +158,7 @@ footer {
 }
 @media (min-width: 768px) {
   .form-wrapper {
-    margin: 1rem 0 7rem;
+    margin: 1rem 0 10rem;
   }
 }
 @media (min-width: 768px) {

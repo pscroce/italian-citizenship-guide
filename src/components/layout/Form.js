@@ -187,7 +187,7 @@ class Form extends Component {
       <div className="form-wrapper">
         <h1>How To Get Italian Citizenship</h1>
         <p>Most people with Italian ancestors can get Italian dual citizenship and an Italian passport. With it come all the benefits of European citizenship such as the rights to live, work, establish business, and study in any of the 31 countries in the European Economic Area. The process is achievable but marred by misinformation and bureaucratic bloat.  </p>
-        <p>After receiving Italian dual citizenship and an Italian passport in 2018, I decided to make an Italian citizenship guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through.</p>
+        <p>After receiving Italian dual citizenship and an Italian passport in 2018, I made this guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through. It's very much a work in progress.</p>
         <p>Answer the questions below to check your eligibility.</p>
         <form onSubmit={this.handleSubmit}>
 
