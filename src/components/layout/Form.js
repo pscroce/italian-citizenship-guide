@@ -196,7 +196,7 @@ class Form extends Component {
             <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
             <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
           </div>
-            <Select searchable={false}
+            <Select isSearchable={false}
               value={ancestor}
               onChange={this.handleAncestorChange}
               options={ancestorOptions}
@@ -213,7 +213,7 @@ class Form extends Component {
                   <h3 className="no-margin-bottom">Now select your Italian parent</h3>
                   <p className="description">This is the daughter or son of your Italian grandparent.</p>
                 </div>
-                <Select searchable={false}
+                <Select isSearchable={false}
                   value={parent}
                   onChange={this.handleParentChange}
                   options={parentOptions}
@@ -228,7 +228,7 @@ class Form extends Component {
               <div>
                 <h3 className="no-margin-bottom">Now select your Italian grandparent</h3>
                 <p className="description">This is the daughter or son of your Italian great-grandparent.</p>
-                  <Select searchable={false}
+                  <Select isSearchable={false}
                     value={grandparent}
                     onChange={this.handleGrandparentChange}
                     options={grandparentOptions}
@@ -237,7 +237,7 @@ class Form extends Component {
                   />
                 <h3 className="no-margin-bottom">And also your Italian parent</h3>
                 <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent.</p>
-                  <Select searchable={false}
+                  <Select isSearchable={false}
                     value={parent}
                     onChange={this.handleParentChange}
                     options={parentOptions}
@@ -252,7 +252,7 @@ class Form extends Component {
               <div>
                 <h3 className="no-margin-bottom">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship for any reason before you were born?</h3>
                 <p className="description">There are many reasons people choose to naturalize or renounce citizenship, ranging from standard immigration procedure to applying for top secret clearance in a government or military position.</p>
-                <Select searchable={false}
+                <Select isSearchable={false}
                   value={ancestorNaturalized}
                   onChange={this.handleNaturalizedChange}
                   options={booleanOptions}
@@ -261,7 +261,7 @@ class Form extends Component {
                 />
                 <h3 className="no-margin-bottom">Were you born while your {ancestor.value} was married to your {ancestor.value !== 'mother' && ancestor.value !== 'father' ? (ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
                 <p className="description">Italian law states that Italian citizenship may only be passed to offspring when birthed "in wedlock."</p>
-                <Select searchable={false}
+                <Select isSearchable={false}
                   value={ancestorWedlock}
                   onChange={this.handleWedlockChange}
                   options={booleanOptions}
@@ -276,7 +276,7 @@ class Form extends Component {
                       <div>
                         <h3 className="no-margin-bottom">Was your {parent.value} born after January 1, 1948?</h3>
                         <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
-                        <Select searchable={false}
+                        <Select isSearchable={false}
                           value={mother1948}
                           onChange={this.handleMother1948Change}
                           options={booleanOptions}
@@ -291,7 +291,7 @@ class Form extends Component {
                       <div>
                         <h3 className="no-margin-bottom">Was your {grandparent.value} born after January 1, 1948?</h3>
                         <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
-                        <Select searchable={false}
+                        <Select isSearchable={false}
                           value={grandmother1948}
                           onChange={this.handleGrandmother1948Change}
                           options={booleanOptions}
@@ -305,7 +305,7 @@ class Form extends Component {
                       <div>
                         <h3 className="no-margin-bottom">Was your {greatGrandparent.value} born after January 1, 1948?</h3>
                         <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
-                        <Select searchable={false}
+                        <Select isSearchable={false}
                           value={greatGrandmother1948}
                           onChange={this.handleGreatGrandmother1948Change}
                           options={booleanOptions}
