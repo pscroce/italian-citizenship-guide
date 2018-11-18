@@ -26,8 +26,14 @@ Contributions welcome!
 - After receiving Italian citizenship, how do you get an Italian passport?
 - How much does the whole process cost?
 
-2. Account registration, login, and persistance of eligibility results.
-- This will use Firebase. If you want to work on this PR, I'll send you the credentials.
+2. Make GuideSteps component more complete.
+- Add links to regional consulates, appointment registration and other regional details
+- Add details on acquiring Italian documents
+- Add details on acquiring naturalization documents
+- Add details on acquiring US vital documents
+- Add details on acquiring apostilles
+- Add details on compiling an application
+- Add details on cost of application
 
 
 ----

@@ -327,7 +327,7 @@ class Form extends Component {
                   <div>
                    <h2 className="no-margin-bottom">Congratulations! You can apply for Italian citizenship.</h2>
                    <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
-                   <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide &#9660;"}</button>
+                   <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
                   </div>
                 }
                 {
