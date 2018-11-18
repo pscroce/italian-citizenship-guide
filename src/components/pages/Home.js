@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Header from '../layout/Header';
+import Footer from '../layout/Footer';
 import Form from '../layout/Form';
 import SectionNarrow from '../layout/SectionNarrow';
 import '../../../src/App.css';
@@ -17,9 +18,8 @@ function Home() {
         </SectionNarrow>
 
       </div>
+      <Footer></Footer>
 
-
-      <footer>Italian Citizenship Guide</footer>
     </div>
   )
 }

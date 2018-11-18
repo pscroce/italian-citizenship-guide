@@ -43,20 +43,30 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
 }
-nav.primary-nav {
+nav.primary-nav, nav.footer-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
-nav.primary-nav .nav-right a {
-  margin-left: 10px;
+nav.primary-nav a, nav.footer-nav a {
   display: inline-block;
   border-bottom: none;
 }
+nav.primary-nav .nav-right a, nav.footer-nav .nav-right a {
+  margin-left: 10px;
+}
 @media (min-width: 768px) {
-  nav.primary-nav .nav-right a {
+  nav.primary-nav .nav-right a, nav.footer-nav .nav-right a{
     margin-left: 20px;
+  }
+}
+nav.primary-nav .nav-left a, nav.footer-nav .nav-left a {
+  margin-right: 10px;
+}
+@media (min-width: 768px) {
+  nav.primary-nav .nav-left a, nav.footer-nav .nav-left a{
+    margin-right: 20px;
   }
 }
 body {
@@ -112,7 +122,6 @@ a.button:hover {
 button.-small, a.button.-small {
   padding: 10px 15px;
   transition: all 0.2s ease;
-
 }
 button.-large, a.button.-large {
   width: 550px;
@@ -176,7 +185,11 @@ form {
     margin: 0;
   }
 }
-
+sup {
+  font-size: .5rem;
+  margin-left: 5px;
+  color: var(--lightGray);
+}
 /* .guide__wrapper {
   overflow:hidden;
   transition:transform 0.3s ease-out;
@@ -201,16 +214,7 @@ form {
 } */
 
 
-
-sup {
-  font-size: .5rem;
-  margin-left: 5px;
-}
-
-
-/* other forms */
-
-/* Forms */
+/* Other (currently unused) Forms */
 ::placeholder, label {
   color: var(--textColor);
 }
