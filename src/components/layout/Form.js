@@ -100,12 +100,13 @@ class Form extends Component {
     let greatGrandmother = this.state.greatGrandparent.value === 'great-grandmother';
     let greatGrandfather = this.state.ancestor.value === 'great-grandfather';
 
+    // Before a 2009 equality ruling, the "1948 Rule" precluded women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. The process for attaining citizenship varies depending on this.
     let oneGenFemaleAfter1948 =   (motherAncestor && mother1948)
-    let twoGenFemaleAfter1948 =   (grandmotherAncestor      && grandmother1948 && father )                    || (grandmother      && grandmother1948 && mother && mother1948)
-    let threeGenFemaleAfter1948 = (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && father) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandfather && mother && mother1948) || (greatGrandmother && greatGrandmotherAncestor && grandmother && grandmother1948 && father)
+    let twoGenFemaleAfter1948 =   (grandmotherAncestor      && grandmother1948 && father )                    || (grandmotherAncestor      && grandmother1948  && mother && mother1948)
+    let threeGenFemaleAfter1948 = (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && father) || (greatGrandmotherAncestor && greatGrandmother1948 && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && mother && mother1948) || (greatGrandmotherAncestor && greatGrandmother1948 && grandmother && grandmother1948 && father)
+    let femaleAfter1948 = (oneGenFemaleAfter1948 || twoGenFemaleAfter1948 || threeGenFemaleAfter1948);
 
     let baselineEligibility = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
-    let femaleAfter1948 = (oneGenFemaleAfter1948 || twoGenFemaleAfter1948 || threeGenFemaleAfter1948);
 
     if      (baselineEligibility && mother){
       eligible = true;}
@@ -185,7 +186,7 @@ class Form extends Component {
         <p>Most people with Italian ancestors can get Italian dual citizenship and an Italian passport. With it come all the benefits of European citizenship such as the rights to live, work, establish business, and study in any of the 31 countries in the European Economic Area. The process is achievable but marred by misinformation and bureaucratic bloat.  </p>
         <p>After receiving Italian dual citizenship and an Italian passport in 2018, I made this guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through. It's very much a work in progress.</p>
         <p>Answer the questions below to check your eligibility.</p>
-        <form onSubmit={this.handleSubmit}>
+        <form>
 
         <div className="question__wrapper">
           <div className="question">
@@ -256,7 +257,7 @@ class Form extends Component {
                   styles={selectStyles}
                 />
                 <h3 className="no-margin-bottom">Were you born while your {ancestor.value} was married to your {ancestor.value !== 'mother' && ancestor.value !== 'father' ? (ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
-                <p className="description">Italian law states that Italian citizenship may only be passed to offspring when birthed "in wedlock."</p>
+                <p className="description">Italian law states that Italian citizenship may only be passed to children "born in wedlock."</p>
                 <Select isSearchable={false}
                   value={ancestorWedlock}
                   onChange={this.handleWedlockChange}
@@ -271,7 +272,7 @@ class Form extends Component {
                       (parent.value === 'mother') &&
                       <div>
                         <h3 className="no-margin-bottom">Were you born after January 1, 1948?</h3>
-                        <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
+                        <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
                         <Select isSearchable={false}
                           value={mother1948}
                           onChange={this.handleMother1948Change}
@@ -286,7 +287,7 @@ class Form extends Component {
                       (grandparent.value === 'grandmother' && parent.value) &&
                       <div>
                         <h3 className="no-margin-bottom">Was your {parent.value} born after January 1, 1948?</h3>
-                        <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
+                        <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
                         <Select isSearchable={false}
                           value={grandmother1948}
                           onChange={this.handleGrandmother1948Change}
@@ -300,7 +301,7 @@ class Form extends Component {
                       (greatGrandparent.value === 'great-grandmother' && grandparent.value) &&
                       <div>
                         <h3 className="no-margin-bottom">Was your {grandparent.value} born after January 1, 1948?</h3>
-                        <p className="description">The "1948 Rule" precludes women from passing Italian citizenship to children born before the date Italy became a Republic, January 1, 1948. </p>
+                        <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
                         <Select isSearchable={false}
                           value={greatGrandmother1948}
                           onChange={this.handleGreatGrandmother1948Change}
@@ -324,7 +325,7 @@ class Form extends Component {
                    <h2 className="no-margin-bottom">Congratulations! You're eligible for Italian citizenship.</h2>
                    <p>Click the button below to read the full process required to apply for citizenship.</p>
                    { (!this.state.femaleAfter1948) &&
-                     <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your application process can be submitted through the Rome Tribunal.</p>
+                     <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your applicationThere is a different process for attaining  can be submitted through the Rome Tribunal.</p>
                    }
                    { (this.state.femaleAfter1948) &&
                      <p>Your application can be submitted through any Italian consulate.</p>
