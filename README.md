@@ -4,6 +4,14 @@ This guide is intended to make it a lot easier to get Italian citizenship by anc
 
 It contains questions to determine eligibility and a step-by-step guide.
 
+## How to Contribute
+
+1. Talk through new ideas for the site with me
+2. [Report a bug](https://airtable.com/shrAlrvsZrs8zH9Z6) or other wonky behavior
+3. Design the site
+4. Commit code (desired features below)
+5. Suggest some way you can help. Feel free to reach out! 
+
 ## Getting Started
 
 Clone the repo and `yarn install` or `npm install`.
