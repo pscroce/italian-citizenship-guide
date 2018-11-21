@@ -103,9 +103,9 @@ a:hover, a:active {
   background-size: 100% 20%;
 }
 button, a.button {
-  background-size: 0 30%;
+  background-size: 0 15%;
   background-repeat: no-repeat;
-  background-image: linear-gradient(to right, rgba(0,146,70, 99%) 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, rgba(206,43,55, 99%) 66.66666666666%);
+  background-image: linear-gradient(to right, #009246 33.33333333333%, var(--backgroundColor) 33.33333333333%, var(--backgroundColor) 66.66666666666%, #CE2B37 66.66666666666%);
   background-position: center bottom;
   background-color: #4d4d4d;
   color: var(--backgroundColor);
