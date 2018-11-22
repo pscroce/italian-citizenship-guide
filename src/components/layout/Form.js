@@ -162,7 +162,6 @@ class Form extends Component {
       control: (provided, state) =>  ({
         ...provided,
         backgroundColor: '#f7f7f7',
-        // width: 200,
       }),
       container: (provided, state) =>  ({
         ...provided,
@@ -180,6 +179,7 @@ class Form extends Component {
         marginTop: -40,
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
         border: '1px solid #c5c5c5',
+
       }),
       option: (provided, state) => ({
         ...provided,
@@ -188,8 +188,9 @@ class Form extends Component {
     }
     return (
       <div className="form-wrapper">
-        <h1>How To Get Italian Citizenship</h1>
-        <p>People with Italian ancestors up to three generations back can get dual Italian citizenship. With it comes the benefits of European citizenship.</p>
+        <h1 className="no-margin-bottom">How To Get Italian Citizenship</h1>
+        <h2 className="no-margin-top">Dual Italian Citizenship Jure Sanguinis</h2>
+        <p>People with Italian family up to three generations back can get Italian citizenship. With it comes the benefits of European citizenship.</p>
         <p>This guide includes an eligibility check and a personalized checklist for anyone interested in pursuing the process, called jure sanguinis.</p>
         <p><b>Want to apply? Answer the following questions to see if you're eligible.</b></p>
 
@@ -197,7 +198,7 @@ class Form extends Component {
 
         <div className="question__wrapper">
           <div className="question">
-            <h2 className="no-margin-bottom">Who is your Italian ancestor?</h2>
+            <p className="question-title">Who is your Italian ancestor?</p>
             <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
           </div>
             <Select isSearchable={false}
@@ -214,7 +215,7 @@ class Form extends Component {
               (ancestor.value === 'grandmother' || ancestor.value === 'grandfather') &&
               <div className="question__wrapper">
                 <div className="question">
-                  <h3 className="no-margin-bottom">Who is your parent on your Italian side?</h3>
+                  <p className="question-title">Who is your parent on your Italian side?</p>
                   <p className="description">This is the daughter or son of your Italian grandparent.</p>
                 </div>
                 <Select isSearchable={false}
@@ -230,7 +231,7 @@ class Form extends Component {
             { // If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
               (ancestor.value === 'great-grandmother' || ancestor.value === 'great-grandfather') &&
               <div>
-                <h3 className="no-margin-bottom">Who is your grandparent on your Italian side?</h3>
+                <p className="question-title">Who is your grandparent on your Italian side?</p>
                 <p className="description">This is the daughter or son of your Italian great-grandparent.</p>
                   <Select isSearchable={false}
                     value={grandparent}
@@ -239,7 +240,7 @@ class Form extends Component {
                     theme={selectTheme}
                     styles={selectStyles}
                   />
-                <h3 className="no-margin-bottom">Who is your parent on your Italian side?</h3>
+                <p className="question-title">Who is your parent on your Italian side?</p>
                 <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent.</p>
                   <Select isSearchable={false}
                     value={parent}
@@ -254,7 +255,7 @@ class Form extends Component {
             { // They need to prove their parent did not naturalize or renounce citizenship before they were born and that they were born when their parents were "in wedlock."
               (ancestor.value) &&
               <div>
-                <h3 className="no-margin-bottom">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship before you were born?</h3>
+                <p className="question-title">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship before you were born?</p>
                 <p className="description">There are many reasons people choose to naturalize or renounce citizenship, ranging from standard immigration procedure to applying for top secret clearance in a government or military position.</p>
                 <Select isSearchable={false}
                   value={ancestorNaturalized}
@@ -263,7 +264,7 @@ class Form extends Component {
                   theme={selectTheme}
                   styles={selectStyles}
                 />
-                <h3 className="no-margin-bottom">Were you born while your {ancestor.value} was married to your {ancestor.value !== 'mother' && ancestor.value !== 'father' ? (ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</h3>
+                <p className="question-title">Were you born while your {ancestor.value} was married to your {ancestor.value !== 'mother' && ancestor.value !== 'father' ? (ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</p>
                 <p className="description">Italian law states that Italian citizenship may only be passed to children "born in wedlock."</p>
                 <Select isSearchable={false}
                   value={ancestorWedlock}
@@ -278,7 +279,7 @@ class Form extends Component {
                     {
                       (parent.value === 'mother') &&
                       <div>
-                        <h3 className="no-margin-bottom">Were you born after January 1, 1948?</h3>
+                        <p className="question-title">Were you born after January 1, 1948?</p>
                         <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
                         <Select isSearchable={false}
                           value={mother1948}
@@ -293,7 +294,7 @@ class Form extends Component {
                     {
                       (grandparent.value === 'grandmother' && parent.value) &&
                       <div>
-                        <h3 className="no-margin-bottom">Was your {parent.value} born after January 1, 1948?</h3>
+                        <p className="question-title">Was your {parent.value} born after January 1, 1948?</p>
                         <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
                         <Select isSearchable={false}
                           value={grandmother1948}
@@ -307,7 +308,7 @@ class Form extends Component {
                     {
                       (greatGrandparent.value === 'great-grandmother' && grandparent.value) &&
                       <div>
-                        <h3 className="no-margin-bottom">Was your {grandparent.value} born after January 1, 1948?</h3>
+                        <p className="question-title">Was your {grandparent.value} born after January 1, 1948?</p>
                         <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
                         <Select isSearchable={false}
                           value={greatGrandmother1948}
@@ -323,13 +324,13 @@ class Form extends Component {
 
                 {
                   (ancestor.value) &&
-                  <button onClick={this.isEligible} className="-large">Check Eligibility</button>
+                  <button onClick={this.isEligible} className="-large primary">Check Eligibility</button>
                 }
 
                 {
                   (this.state.isEligible === true) &&
                   <div>
-                   <h2 className="no-margin-bottom">Congratulations! You're eligible for Italian citizenship.</h2>
+                   <p className="question-title">Congratulations! You're eligible for Italian citizenship.</p>
                    <p>Click the button below to read all the steps required to apply.</p>
                    { (!this.state.femaleAfter1948) &&
                      <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your applicationThere is a different process for attaining  can be submitted through the Rome Tribunal.</p>
@@ -337,15 +338,15 @@ class Form extends Component {
                    { (this.state.femaleAfter1948) &&
                      <p>Your application can be submitted through any Italian consulate.</p>
                    }
-                   <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
+                   <button onClick={this.openGuide} className="-large empty">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
                   </div>
                 }
                 {
                   (this.state.isEligible === false) &&
                   <div>
-                   <h2 className="no-margin-bottom">Sorry! You are not eligible for Italian citizenship.</h2>
+                   <p className="question-title">Sorry! You are not eligible for Italian citizenship.</p>
                    <p className="description">Click the button below to read all the steps required to apply.</p>
-                   <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
+                   <button onClick={this.openGuide} className="-large empty">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
                   </div>
                 }
                 {
