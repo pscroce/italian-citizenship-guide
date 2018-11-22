@@ -175,6 +175,12 @@ class Form extends Component {
         backgroundColor: '#f7f7f7',
         padding: 0,
       }),
+      menu: (provided, state) =>  ({
+        ...provided,
+        marginTop: -40,
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+        border: '1px solid #c5c5c5',
+      }),
       option: (provided, state) => ({
         ...provided,
         color: state.isSelected ? '#3d3d3d' : '#3d3d3d',
@@ -183,14 +189,15 @@ class Form extends Component {
     return (
       <div className="form-wrapper">
         <h1>How To Get Italian Citizenship</h1>
-        <p>Most people with Italian ancestors can get Italian dual citizenship and an Italian passport. With it come all the benefits of European citizenship such as the rights to live, work, establish business, and study in any of the 31 countries in the European Economic Area. The process is achievable but marred by misinformation and bureaucratic bloat.  </p>
-        <p>After receiving Italian dual citizenship and an Italian passport in 2018, I made this guide — something I hope will be actually useful, something better than the hundreds of outdated blogs and websites I had to wade through. It's very much a work in progress.</p>
-        <p>Answer the question{ancestor.value && 's'} below to check your eligibility.</p>
+        <p>People with Italian ancestors up to three generations back can get dual Italian citizenship. With it comes the benefits of European citizenship.</p>
+        <p>This guide includes an eligibility check and a personalized checklist for anyone interested in pursuing the process, called jure sanguinis.</p>
+        <p><b>Want to apply? Answer the following questions to see if you're eligible.</b></p>
+
         <form>
 
         <div className="question__wrapper">
           <div className="question">
-            <h2 className="no-margin-bottom">Select your Italian ancestor</h2>
+            <h2 className="no-margin-bottom">Who is your Italian ancestor?</h2>
             <p className="description">This is your closest biological ancestor who has or had Italian citizenship.</p>
           </div>
             <Select isSearchable={false}
@@ -207,7 +214,7 @@ class Form extends Component {
               (ancestor.value === 'grandmother' || ancestor.value === 'grandfather') &&
               <div className="question__wrapper">
                 <div className="question">
-                  <h3 className="no-margin-bottom">Now select your Italian parent</h3>
+                  <h3 className="no-margin-bottom">Who is your parent on your Italian side?</h3>
                   <p className="description">This is the daughter or son of your Italian grandparent.</p>
                 </div>
                 <Select isSearchable={false}
@@ -223,7 +230,7 @@ class Form extends Component {
             { // If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
               (ancestor.value === 'great-grandmother' || ancestor.value === 'great-grandfather') &&
               <div>
-                <h3 className="no-margin-bottom">Now select your Italian grandparent</h3>
+                <h3 className="no-margin-bottom">Who is your grandparent on your Italian side?</h3>
                 <p className="description">This is the daughter or son of your Italian great-grandparent.</p>
                   <Select isSearchable={false}
                     value={grandparent}
@@ -232,7 +239,7 @@ class Form extends Component {
                     theme={selectTheme}
                     styles={selectStyles}
                   />
-                <h3 className="no-margin-bottom">And also your Italian parent</h3>
+                <h3 className="no-margin-bottom">Who is your parent on your Italian side?</h3>
                 <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent.</p>
                   <Select isSearchable={false}
                     value={parent}
@@ -247,7 +254,7 @@ class Form extends Component {
             { // They need to prove their parent did not naturalize or renounce citizenship before they were born and that they were born when their parents were "in wedlock."
               (ancestor.value) &&
               <div>
-                <h3 className="no-margin-bottom">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship for any reason before you were born?</h3>
+                <h3 className="no-margin-bottom">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship before you were born?</h3>
                 <p className="description">There are many reasons people choose to naturalize or renounce citizenship, ranging from standard immigration procedure to applying for top secret clearance in a government or military position.</p>
                 <Select isSearchable={false}
                   value={ancestorNaturalized}
