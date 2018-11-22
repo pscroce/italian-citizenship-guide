@@ -330,7 +330,7 @@ class Form extends Component {
                   (this.state.isEligible === true) &&
                   <div>
                    <h2 className="no-margin-bottom">Congratulations! You're eligible for Italian citizenship.</h2>
-                   <p>Click the button below to read the full process required to apply for citizenship.</p>
+                   <p>Click the button below to read all the steps required to apply.</p>
                    { (!this.state.femaleAfter1948) &&
                      <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your applicationThere is a different process for attaining  can be submitted through the Rome Tribunal.</p>
                    }
@@ -344,7 +344,7 @@ class Form extends Component {
                   (this.state.isEligible === false) &&
                   <div>
                    <h2 className="no-margin-bottom">Sorry! You are not eligible for Italian citizenship.</h2>
-                   <p className="description">Click the button below to read the full process required to apply for citizenship.</p>
+                   <p className="description">Click the button below to read all the steps required to apply.</p>
                    <button onClick={this.openGuide} className="-large">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
                   </div>
                 }
