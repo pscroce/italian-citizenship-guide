@@ -186,6 +186,35 @@ class Form extends Component {
         color: state.isSelected ? '#3d3d3d' : '#3d3d3d',
       }),
     }
+    const selectStylesFilled = {
+      control: (provided, state) =>  ({
+        ...provided,
+        backgroundColor: '#f7f7f7',
+      }),
+      container: (provided, state) =>  ({
+        ...provided,
+        marginTop: 10,
+        // width: 200,
+        marginBottom: 'auto',
+        boderColor: 'green',
+      }),
+      menuList: (provided, state) =>  ({
+        ...provided,
+        backgroundColor: '#f7f7f7',
+        padding: 0,
+      }),
+      menu: (provided, state) =>  ({
+        ...provided,
+        marginTop: -40,
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+        border: '1px solid #c5c5c5',
+
+      }),
+      option: (provided, state) => ({
+        ...provided,
+        color: state.isSelected ? '#3d3d3d' : '#3d3d3d',
+      }),
+    }
     return (
       <div className="form-wrapper">
         <h1 className="no-margin-bottom">How To Get Italian Citizenship</h1>
@@ -206,7 +235,7 @@ class Form extends Component {
               onChange={this.handleAncestorChange}
               options={ancestorOptions}
               theme={selectTheme}
-              styles={selectStyles}
+              styles={this.ancestor && selectStylesFilled || selectStyles}
             />
         </div>
 
@@ -214,7 +243,7 @@ class Form extends Component {
           (ancestor.value === 'mother' || ancestor.value === 'father') &&
           <div className="question__wrapper">
             <p className="question-title">Were you born while your parents were married?</p>
-            <p className="description">The Italian law jure sanguinis states that Italian citizenship may only be passed to children "born in wedlock."</p>
+            <p className="description">The Italian jure sanguinis law states that Italian citizenship may only be passed to children "born in wedlock."</p>
             <Select isSearchable={false}
               value={ancestorWedlock}
               onChange={this.handleWedlockChange}
@@ -230,8 +259,8 @@ class Form extends Component {
           <div>
             <div className="question__wrapper">
               <div className="question">
-                <p className="question-title">Who is your parent on your Italian side?</p>
-                <p className="description">This is the daughter or son of your Italian {grandparent.value || 'grandparent'}.</p>
+                <p className="question-title">Which of your parents is the son or daughter of your Italian {grandparent.value || 'grandparent'}?</p>
+                <p className="description">This is your grandparent on your Italian side.</p>
               </div>
               <Select isSearchable={false}
                 value={parent}
@@ -242,8 +271,8 @@ class Form extends Component {
               />
             </div>
             <div className="question__wrapper">
-              <p className="question-title">Was your Italian {parent.value || 'parent'} born while your grandparents were married and were you born while your parents were married?</p>
-              <p className="description">The Italian law jure sanguinis states that Italian citizenship may only be passed to children "born in wedlock."</p>
+              <p className="question-title">Was everyone in your Italian lineange born while their parents were married?</p>
+              <p className="description">For you, this is a question of whether your grandparents were married when your Italian {parent.value || 'parent'} was born and whether your parents were married when you were born. The Italian jure sanguinis law states that Italian citizenship may only be passed to children "born in wedlock."</p>
               <Select isSearchable={false}
                 value={ancestorWedlock}
                 onChange={this.handleWedlockChange}
@@ -259,8 +288,8 @@ class Form extends Component {
           (ancestor.value === 'great-grandmother' || ancestor.value === 'great-grandfather') &&
           <div>
             <div className="question__wrapper">
-              <p className="question-title">Who is your grandparent on your Italian side?</p>
-              <p className="description">This is the daughter or son of your Italian {greatGrandparent.value || 'great-grandparent'}.</p>
+              <p className="question-title">Which of your grandparents is the son or daughter of your Italian {greatGrandparent.value || 'great-grandparent'}?</p>
+              <p className="description">This is your grandparent on your Italian side.</p>
                 <Select isSearchable={false}
                   value={grandparent}
                   onChange={this.handleGrandparentChange}
@@ -270,8 +299,8 @@ class Form extends Component {
                 />
               </div>
             <div className="question__wrapper">
-              <p className="question-title">Who is your parent on your Italian side?</p>
-              <p className="description">This is the daughter or son of your Italian {grandparent.value || 'grandparent'}.</p>
+              <p className="question-title">Which of your parents is the son or daughter of your Italian {grandparent.value || 'grandparent'}?</p>
+              <p className="description">This is your parent on your Italian side.</p>
                 <Select isSearchable={false}
                   value={parent}
                   onChange={this.handleParentChange}
@@ -281,8 +310,8 @@ class Form extends Component {
                 />
             </div>
             <div className="question__wrapper">
-              <p className="question-title">Was your Italian {grandparent.value || 'grandparent'} born while your great-grandparents were married, your Italian {parent.value || 'parent'} born while your grandparents were married, and were you born while your parents were married?</p>
-              <p className="description">The Italian law jure sanguinis states that Italian citizenship may only be passed to children "born in wedlock."</p>
+              <p className="question-title">Was everyone in your Italian lineange born while their parents were married?</p>
+              <p className="description">For you, this is a question of whether your great-grandparents were married when your Italian {grandparent.value || 'grandparent'} was born, your grandparents were married when your Italian {parent.value || 'parent'} was born, and whether your parents were married when you were born. The Italian jure sanguinis law states that Italian citizenship may only be passed to children "born in wedlock."</p>
               <Select isSearchable={false}
                 value={ancestorWedlock}
                 onChange={this.handleWedlockChange}
