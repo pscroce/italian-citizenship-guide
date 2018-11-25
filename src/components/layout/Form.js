@@ -264,7 +264,7 @@ class Form extends Component {
                   theme={selectTheme}
                   styles={selectStyles}
                 />
-                <p className="question-title">Were you born while your {ancestor.value} was married to your {ancestor.value !== 'mother' && ancestor.value !== 'father' ? (ancestor.value.indexOf('great') > -1 ? 'great-grand' : 'grand') : ''}{ancestor.value.indexOf('mother') > -1 ? 'father' : 'mother'}?</p>
+                <p className="question-title">Were all children in your Italian line born while the parents were married?</p>
                 <p className="description">Italian law states that Italian citizenship may only be passed to children "born in wedlock."</p>
                 <Select isSearchable={false}
                   value={ancestorWedlock}
