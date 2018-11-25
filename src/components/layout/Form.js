@@ -210,14 +210,68 @@ class Form extends Component {
             />
         </div>
 
+        { // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
+          (ancestor.value === 'mother' || ancestor.value === 'father') &&
+          <div className="question__wrapper">
+            <p className="question-title">Were you born while your parents were married?</p>
+            <p className="description">The Italian law jure sanguinis states that Italian citizenship may only be passed to children "born in wedlock."</p>
+            <Select isSearchable={false}
+              value={ancestorWedlock}
+              onChange={this.handleWedlockChange}
+              options={booleanOptions}
+              theme={selectTheme}
+              styles={selectStyles}
+            />
+          </div>
+        }
 
-            { // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
-              (ancestor.value === 'grandmother' || ancestor.value === 'grandfather') &&
-              <div className="question__wrapper">
-                <div className="question">
-                  <p className="question-title">Who is your parent on your Italian side?</p>
-                  <p className="description">This is the daughter or son of your Italian grandparent.</p>
-                </div>
+        { // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
+          (ancestor.value === 'grandmother' || ancestor.value === 'grandfather') &&
+          <div>
+            <div className="question__wrapper">
+              <div className="question">
+                <p className="question-title">Who is your parent on your Italian side?</p>
+                <p className="description">This is the daughter or son of your Italian {grandparent.value || 'grandparent'}.</p>
+              </div>
+              <Select isSearchable={false}
+                value={parent}
+                onChange={this.handleParentChange}
+                options={parentOptions}
+                theme={selectTheme}
+                styles={selectStyles}
+              />
+            </div>
+            <div className="question__wrapper">
+              <p className="question-title">Was your Italian {parent.value || 'parent'} born while your grandparents were married and were you born while your parents were married?</p>
+              <p className="description">The Italian law jure sanguinis states that Italian citizenship may only be passed to children "born in wedlock."</p>
+              <Select isSearchable={false}
+                value={ancestorWedlock}
+                onChange={this.handleWedlockChange}
+                options={booleanOptions}
+                theme={selectTheme}
+                styles={selectStyles}
+              />
+            </div>
+          </div>
+        }
+
+        { // If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
+          (ancestor.value === 'great-grandmother' || ancestor.value === 'great-grandfather') &&
+          <div>
+            <div className="question__wrapper">
+              <p className="question-title">Who is your grandparent on your Italian side?</p>
+              <p className="description">This is the daughter or son of your Italian {greatGrandparent.value || 'great-grandparent'}.</p>
+                <Select isSearchable={false}
+                  value={grandparent}
+                  onChange={this.handleGrandparentChange}
+                  options={grandparentOptions}
+                  theme={selectTheme}
+                  styles={selectStyles}
+                />
+              </div>
+            <div className="question__wrapper">
+              <p className="question-title">Who is your parent on your Italian side?</p>
+              <p className="description">This is the daughter or son of your Italian {grandparent.value || 'grandparent'}.</p>
                 <Select isSearchable={false}
                   value={parent}
                   onChange={this.handleParentChange}
@@ -225,136 +279,115 @@ class Form extends Component {
                   theme={selectTheme}
                   styles={selectStyles}
                 />
-              </div>
-            }
+            </div>
+            <div className="question__wrapper">
+              <p className="question-title">Was your Italian {grandparent.value || 'grandparent'} born while your great-grandparents were married, your Italian {parent.value || 'parent'} born while your grandparents were married, and were you born while your parents were married?</p>
+              <p className="description">The Italian law jure sanguinis states that Italian citizenship may only be passed to children "born in wedlock."</p>
+              <Select isSearchable={false}
+                value={ancestorWedlock}
+                onChange={this.handleWedlockChange}
+                options={booleanOptions}
+                theme={selectTheme}
+                styles={selectStyles}
+              />
+            </div>
+          </div>
+        }
 
-            { // If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
-              (ancestor.value === 'great-grandmother' || ancestor.value === 'great-grandfather') &&
+        { // They need to prove their parent did not naturalize or renounce citizenship before they were born and that they were born when their parents were "in wedlock."
+          (ancestor.value) &&
+          <div>
+            <p className="question-title">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship before you were born?</p>
+            <p className="description">There are many reasons people choose to naturalize or renounce citizenship, ranging from standard immigration procedure to applying for top secret clearance in a government or military position.</p>
+            <Select isSearchable={false}
+              value={ancestorNaturalized}
+              onChange={this.handleNaturalizedChange}
+              options={booleanOptions}
+              theme={selectTheme}
+              styles={selectStyles}
+            />
+            { // If your ancestor was a woman and was born before 1948, she cannot pass on Italian citizenship
+              (true) &&
               <div>
-                <p className="question-title">Who is your grandparent on your Italian side?</p>
-                <p className="description">This is the daughter or son of your Italian great-grandparent.</p>
-                  <Select isSearchable={false}
-                    value={grandparent}
-                    onChange={this.handleGrandparentChange}
-                    options={grandparentOptions}
-                    theme={selectTheme}
-                    styles={selectStyles}
-                  />
-                <p className="question-title">Who is your parent on your Italian side?</p>
-                <p className="description">This is the daughter or son of your grandparent who is the son or daughter of your Italian great-grandparent.</p>
-                  <Select isSearchable={false}
-                    value={parent}
-                    onChange={this.handleParentChange}
-                    options={parentOptions}
-                    theme={selectTheme}
-                    styles={selectStyles}
-                  />
+                {
+                  (parent.value === 'mother') &&
+                  <div>
+                    <p className="question-title">Were you born after January 1, 1948?</p>
+                    <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
+                    <Select isSearchable={false}
+                      value={mother1948}
+                      onChange={this.handleMother1948Change}
+                      options={booleanOptions}
+                      theme={selectTheme}
+                      styles={selectStyles}
+                    />
+                  </div>
+                }
+
+                {
+                  (grandparent.value === 'grandmother' && parent.value) &&
+                  <div>
+                    <p className="question-title">Was your {parent.value} born after January 1, 1948?</p>
+                    <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
+                    <Select isSearchable={false}
+                      value={grandmother1948}
+                      onChange={this.handleGrandmother1948Change}
+                      options={booleanOptions}
+                      theme={selectTheme}
+                      styles={selectStyles}
+                    />
+                  </div>
+                }
+                {
+                  (greatGrandparent.value === 'great-grandmother' && grandparent.value) &&
+                  <div>
+                    <p className="question-title">Was your {grandparent.value} born after January 1, 1948?</p>
+                    <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
+                    <Select isSearchable={false}
+                      value={greatGrandmother1948}
+                      onChange={this.handleGreatGrandmother1948Change}
+                      options={booleanOptions}
+                      theme={selectTheme}
+                      styles={selectStyles}
+                    />
+                  </div>
+                }
               </div>
             }
 
-            { // They need to prove their parent did not naturalize or renounce citizenship before they were born and that they were born when their parents were "in wedlock."
+            {
               (ancestor.value) &&
+              <button onClick={this.isEligible} className="-large primary">Check Eligibility</button>
+            }
+
+            {
+              (this.state.isEligible === true) &&
               <div>
-                <p className="question-title">Did your {ancestor.value} naturalize or renounce {ancestor.value.indexOf('mother') > -1 ? 'her' : 'his'} Italian citizenship before you were born?</p>
-                <p className="description">There are many reasons people choose to naturalize or renounce citizenship, ranging from standard immigration procedure to applying for top secret clearance in a government or military position.</p>
-                <Select isSearchable={false}
-                  value={ancestorNaturalized}
-                  onChange={this.handleNaturalizedChange}
-                  options={booleanOptions}
-                  theme={selectTheme}
-                  styles={selectStyles}
-                />
-                <p className="question-title">Were all children in your Italian line born while the parents were married?</p>
-                <p className="description">Italian law states that Italian citizenship may only be passed to children "born in wedlock."</p>
-                <Select isSearchable={false}
-                  value={ancestorWedlock}
-                  onChange={this.handleWedlockChange}
-                  options={booleanOptions}
-                  theme={selectTheme}
-                  styles={selectStyles}
-                />
-                { // If your ancestor was a woman and was born before 1948, she cannot pass on Italian citizenship
-                  (true) &&
-                  <div>
-                    {
-                      (parent.value === 'mother') &&
-                      <div>
-                        <p className="question-title">Were you born after January 1, 1948?</p>
-                        <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
-                        <Select isSearchable={false}
-                          value={mother1948}
-                          onChange={this.handleMother1948Change}
-                          options={booleanOptions}
-                          theme={selectTheme}
-                          styles={selectStyles}
-                        />
-                      </div>
-                    }
-
-                    {
-                      (grandparent.value === 'grandmother' && parent.value) &&
-                      <div>
-                        <p className="question-title">Was your {parent.value} born after January 1, 1948?</p>
-                        <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
-                        <Select isSearchable={false}
-                          value={grandmother1948}
-                          onChange={this.handleGrandmother1948Change}
-                          options={booleanOptions}
-                          theme={selectTheme}
-                          styles={selectStyles}
-                        />
-                      </div>
-                    }
-                    {
-                      (greatGrandparent.value === 'great-grandmother' && grandparent.value) &&
-                      <div>
-                        <p className="question-title">Was your {grandparent.value} born after January 1, 1948?</p>
-                        <p className="description">The process for getting Italian citizenship varies depending on the answer to this question.</p>
-                        <Select isSearchable={false}
-                          value={greatGrandmother1948}
-                          onChange={this.handleGreatGrandmother1948Change}
-                          options={booleanOptions}
-                          theme={selectTheme}
-                          styles={selectStyles}
-                        />
-                      </div>
-                    }
-                  </div>
-                }
-
-                {
-                  (ancestor.value) &&
-                  <button onClick={this.isEligible} className="-large primary">Check Eligibility</button>
-                }
-
-                {
-                  (this.state.isEligible === true) &&
-                  <div>
-                   <p className="question-title">Congratulations! You're eligible for Italian citizenship.</p>
-                   <p>Click the button below to read all the steps required to apply.</p>
-                   { (!this.state.femaleAfter1948) &&
-                     <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your applicationThere is a different process for attaining  can be submitted through the Rome Tribunal.</p>
-                   }
-                   { (this.state.femaleAfter1948) &&
-                     <p>Your application can be submitted through any Italian consulate.</p>
-                   }
-                   <button onClick={this.openGuide} className="-large empty">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
-                  </div>
-                }
-                {
-                  (this.state.isEligible === false) &&
-                  <div>
-                   <p className="question-title">Sorry! You are not eligible for Italian citizenship.</p>
-                   <p className="description">Click the button below to read all the steps required to apply.</p>
-                   <button onClick={this.openGuide} className="-large empty">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
-                  </div>
-                }
-                {
-                  (this.state.guideIsOpen) &&
-                  <GuideSteps></GuideSteps>
-                }
+               <p className="question-title">Congratulations! You're eligible for Italian citizenship.</p>
+               <p>Click the button below to read all the steps required to apply.</p>
+               { (!this.state.femaleAfter1948) &&
+                 <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your applicationThere is a different process for attaining  can be submitted through the Rome Tribunal.</p>
+               }
+               { (this.state.femaleAfter1948) &&
+                 <p>Your application can be submitted through any Italian consulate.</p>
+               }
+               <button onClick={this.openGuide} className="-large empty">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
               </div>
             }
+            {
+              (this.state.isEligible === false) &&
+              <div>
+               <p className="question-title">Sorry! You are not eligible for Italian citizenship.</p>
+               <p className="description">Click the button below to read all the steps required to apply.</p>
+               <button onClick={this.openGuide} className="-large empty">{this.state.guideIsOpen ? "Close Guide" : "Open Guide"}</button>
+              </div>
+            }
+            {
+              (this.state.guideIsOpen) &&
+              <GuideSteps></GuideSteps>
+            }
+          </div>
+        }
 
         </form>
       </div>
