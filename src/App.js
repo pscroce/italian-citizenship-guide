@@ -6,6 +6,7 @@ import {
 
 import Guide from './components/pages/Guide';
 import Home from './components/pages/Home';
+import Faq from './components/pages/Faq';
 
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/guide' component={Guide} />
+            <Route path='/faq' component={Faq} />
             <Route component={Home} />
           </Switch>
         </div>
