@@ -40,6 +40,7 @@ class Form extends Component {
     grandmother1948: '',
     mother1948: '',
     isEligible: null,
+    isEligibleOutOfWedlock: null,
     femaleAfter1948: null,
     guideIsOpen: false
   }
@@ -84,6 +85,7 @@ class Form extends Component {
     e.preventDefault();
 
     let eligible;
+    let eligibleOutOfWedlock;
 
     let greatGrandmother1948 = this.state.greatGrandmother1948.value === 'yes';
     let grandmother1948 = this.state.grandmother1948.value === 'yes';
@@ -106,7 +108,8 @@ class Form extends Component {
     let threeGenFemaleAfter1948 = (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && father) || (greatGrandmotherAncestor && greatGrandmother1948 && grandmother && grandmother1948 && mother && mother1948) || (greatGrandmotherAncestor && greatGrandmother1948 && grandfather && mother && mother1948) || (greatGrandmotherAncestor && greatGrandmother1948 && grandmother && grandmother1948 && father)
     let femaleAfter1948 = (oneGenFemaleAfter1948 || twoGenFemaleAfter1948 || threeGenFemaleAfter1948);
 
-    let baselineEligibility = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
+    let baselineEligibility = this.state.ancestorNaturalized.value === 'no';
+    let baselineEligibilityOutOfWedlock = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
 
     if      (baselineEligibility && mother){
       eligible = true;}
@@ -132,9 +135,12 @@ class Form extends Component {
       eligible = true;}
     else if (baselineEligibility && greatGrandfather && grandmother && father){
       eligible = true;}
+    else if (eligible === true && baselineEligibilityOutOfWedlock === true){
+      eligibleOutOfWedlock = true;
+    }
     else {
       eligible = false;}
-    this.setState({ isEligible: eligible, femaleAfter1948: femaleAfter1948 });
+    this.setState({ isEligible: eligible, femaleAfter1948: femaleAfter1948, isEligibleOutOfWedlock: eligibleOutOfWedlock});
   }
 
   render() {
@@ -337,7 +343,7 @@ class Form extends Component {
             />
           </div>
 
-            { // If your ancestor was a woman and was born before 1948, she cannot pass on Italian citizenship
+            { // If your ancestor was a woman and was born before 1948
               (true) &&
               <div>
                 {
@@ -397,7 +403,10 @@ class Form extends Component {
                <p className="question-title">Congratulations! You're eligible for Italian citizenship.</p>
                <p>Click the button below to read all the steps required to apply.</p>
                { (!this.state.femaleAfter1948) &&
-                 <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your applicationThere is a different process for attaining  can be submitted through the Rome Tribunal.</p>
+                 <p>Because part of your lineage includes a woman who gave birth before 1948 to the next person in your lineage, your application can be submitted through the Rome Tribunal.</p>
+               }
+               { (!this.state.isEligibleOutOfWedlock) &&
+                 <p>Sometimes applicants whose lineage includes an "out of wedlock" birth have trouble proving paternity for the child born out of wedlock. You will likely need to show a birth certificate with both parents' names for any child born out of wedlock in your family and may also be asked for proof that the parents lived together.</p>
                }
                { (this.state.femaleAfter1948) &&
                  <p>Your application can be submitted through any Italian consulate.</p>
