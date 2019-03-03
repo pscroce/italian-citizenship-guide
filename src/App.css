@@ -25,6 +25,7 @@
   min-height: 100vh;
   flex-direction: column;
   margin: 0 10px;
+  font-size: 1.2rem;
 }
 @media (min-width: 768px) {
   .App {
@@ -149,7 +150,7 @@ button.-small, a.button.-small {
   transition: all 0.2s ease;
 }
 button.-large, a.button.-large {
-  width: 550px;
+  width: 630px;
   margin: 2rem 0;
   height: 60px;
   font-size: 1.5rem;
@@ -182,7 +183,7 @@ footer {
 }
 @media (min-width: 768px) {
   .section-narrow__wrapper {
-    max-width: 550px;
+    max-width: 630px;
   }
 }
 

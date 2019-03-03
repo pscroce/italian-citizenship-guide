@@ -219,9 +219,8 @@ class Form extends Component {
       <div className="form-wrapper question__wrapper">
         <h1 className="no-margin-bottom">How To Get Italian Citizenship</h1>
         <h2 className="no-margin-top">Dual Italian Citizenship Jure Sanguinis</h2>
-        <p>People with Italian family up to three generations back can get Italian citizenship. With it comes the benefits of European citizenship.</p>
-        <p>This guide includes an eligibility check and a personalized checklist for anyone interested in pursuing the process, called jure sanguinis.</p>
-        <p><b>Want to apply? Answer the following questions to see if you're eligible.</b></p>
+        <p>People with Italian family up to three generations back can get Italian citizenship and an Italian passport.</p>
+        <p><b>Want to apply? Answer these questions to see if you're eligible.</b></p>
 
         <form>
 
