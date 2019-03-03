@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer>
       <nav className="footer-nav">
-        <span>Made for fun by <a href="https://pcroce.com" target="_blank" rel="noopener noreferrer">Peter</a></span> <a href="https://github.com/pscroce/italian-citizenship-guide" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
+        <span>Made by <a href="https://pcroce.com" target="_blank" rel="noopener noreferrer">Peter</a></span> <a href="https://github.com/pscroce/italian-citizenship-guide" target="_blank" rel="noopener noreferrer">View source on GitHub</a>
       </nav>
     </footer>
   )
