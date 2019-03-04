@@ -3,6 +3,9 @@ import GuideSteps from './GuideSteps';
 
 import Select from 'react-select';
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-135538744-1');
+
 // If one's Italian ancestor is their parent, they don't need any additional ancestry.
 // If one's Italian ancestor is their grandparent, they also need documents for their connecting parent.
 // If one's Italian ancestor is their great-grandparent, they also need documents for their connecting grandparent and parent.
@@ -84,6 +87,11 @@ class Form extends Component {
   isEligible = (e) => {
     e.preventDefault();
 
+    ReactGA.event({
+      category: 'Check Eligibility',
+      action: 'Checked Eligibility'
+    });
+
     let eligible;
     let eligibleOutOfWedlock;
 
@@ -111,35 +119,54 @@ class Form extends Component {
     let baselineEligibility = this.state.ancestorNaturalized.value === 'no';
     let baselineEligibilityOutOfWedlock = this.state.ancestorNaturalized.value === 'no' && this.state.ancestorWedlock.value === 'yes';
 
-    if      (baselineEligibility && mother){
-      eligible = true;}
-    else if (baselineEligibility && grandmother && mother){
-      eligible = true;}
-    else if (baselineEligibility && greatGrandmother && grandmother && mother){
-      eligible = true;} // end all female
-    else if (baselineEligibility && father){
-      eligible = true;}
-    else if (baselineEligibility && grandfather && father){
-      eligible = true;}
-    else if (baselineEligibility && greatGrandfather && grandfather && father){
-      eligible = true;} // end all male
-    else if (baselineEligibility && greatGrandmother && grandmother && father){
-      eligible = true;}
-    else if (baselineEligibility && greatGrandmother && grandfather && father){
-      eligible = true;}
-    else if (baselineEligibility && greatGrandmother && grandfather && mother){
-      eligible = true;}
-    else if (baselineEligibility && greatGrandfather && grandmother && mother){
-      eligible = true;}
-    else if (baselineEligibility && greatGrandfather && grandfather && mother){
-      eligible = true;}
-    else if (baselineEligibility && greatGrandfather && grandmother && father){
-      eligible = true;}
-    else if (eligible === true && baselineEligibilityOutOfWedlock === true){
+    if (femaleAfter1948 === false && baselineEligibilityOutOfWedlock === true) {
+      ReactGA.event({
+        category: 'Eligibility Result',
+        action: 'Eligibility Result: Eligible - Female Before 1948 and Out of Wedlock'
+      });
+    }
+    else if (femaleAfter1948 === false) {
+      ReactGA.event({
+        category: 'Eligibility Result',
+        action: 'Eligibility Result: Eligible - Female Before 1948'
+      });
+    }
+    else if (baselineEligibilityOutOfWedlock === true) {
+      ReactGA.event({
+        category: 'Eligibility Result',
+        action: 'Eligibility Result: Eligible - Out of Wedlock'
+      });
       eligibleOutOfWedlock = true;
     }
+    else if (
+        (baselineEligibility && mother) ||
+        (baselineEligibility && grandmother && mother) ||
+        (baselineEligibility && grandmother && mother) ||
+        (baselineEligibility && greatGrandmother && grandmother && mother) ||
+        (baselineEligibility && father) ||
+        (baselineEligibility && grandfather && father) ||
+        (baselineEligibility && greatGrandfather && grandfather && father) ||
+        (baselineEligibility && greatGrandmother && grandmother && father) ||
+        (baselineEligibility && greatGrandmother && grandfather && father) ||
+        (baselineEligibility && greatGrandmother && grandfather && mother) ||
+        (baselineEligibility && greatGrandmother && grandfather && mother) ||
+        (baselineEligibility && greatGrandfather && grandmother && mother) ||
+        (baselineEligibility && greatGrandfather && grandfather && mother) ||
+        (baselineEligibility && greatGrandfather && grandmother && father)
+      ) {
+      ReactGA.event({
+        category: 'Eligibility Result',
+        action: 'Eligibility Result: Eligible'
+      });
+      eligible = true;
+    }
     else {
-      eligible = false;}
+      ReactGA.event({
+        category: 'Eligibility Result',
+        action: 'Eligibility Result: Ineligible '
+      });
+      eligible = false;
+    }
     this.setState({ isEligible: eligible, femaleAfter1948: femaleAfter1948, isEligibleOutOfWedlock: eligibleOutOfWedlock});
   }
 

@@ -6,8 +6,13 @@ import Form from '../layout/Form';
 import SectionNarrow from '../layout/SectionNarrow';
 import '../../../src/App.css';
 
+import ReactGA from 'react-ga';
+
+
 
 function Home() {
+  ReactGA.initialize('UA-135538744-1');
+  ReactGA.pageview('/');
   return (
     <div className="full-height__wrapper">
       <Header></Header>

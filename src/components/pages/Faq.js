@@ -3,7 +3,12 @@ import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import SectionNarrow from '../layout/SectionNarrow';
 
+import ReactGA from 'react-ga';
+
+
 function Faq() {
+  ReactGA.initialize('UA-135538744-1');
+  ReactGA.pageview('/faq');
   return (
     <div className="full-height__wrapper">
       <Header></Header>
